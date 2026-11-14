@@ -736,7 +736,7 @@ class BookingApiTest {
                 .query(Long.class)
                 .single())
         .isZero();
-    Instant next = f.start().plus(Duration.ofDays(7));
+    Instant next = SchedulingService.weekly(f.start(), "Europe/Vilnius", 2, 1).get(1);
     postJson(
         "/api/v1/providers/" + f.provider() + "/availability",
         Map.of("startsAt", next, "endsAt", next.plusSeconds(7200)),
