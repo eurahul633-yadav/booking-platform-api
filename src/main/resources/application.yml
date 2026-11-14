@@ -1,0 +1,47 @@
+spring:
+  application:
+    name: booking-platform-api
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/booking}
+    username: ${DATABASE_USER:booking}
+    password: ${DATABASE_PASSWORD}
+    hikari:
+      maximum-pool-size: ${DATABASE_POOL_SIZE:10}
+      connection-timeout: 5000
+      connection-init-sql: SET statement_timeout = '5s'
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+      connect-timeout: 1s
+      timeout: 1s
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true
+server:
+  shutdown: graceful
+  forward-headers-strategy: none
+  tomcat:
+    max-http-form-post-size: 64KB
+  max-http-request-header-size: 16KB
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: never
+      probes:
+        enabled: true
+app:
+  cookie-secure: ${COOKIE_SECURE:true}
+  allowed-origins: ${ALLOWED_ORIGINS:http://localhost:3000}
+  rate-limit-enabled: ${RATE_LIMIT_ENABLED:true}
+  cache-enabled: ${CACHE_ENABLED:true}
+springdoc:
+  api-docs:
+    enabled: ${API_DOCS_ENABLED:false}
+  swagger-ui:
+    enabled: ${API_DOCS_ENABLED:false}

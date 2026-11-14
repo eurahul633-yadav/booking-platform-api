@@ -1,0 +1,11 @@
+target/
+.env
+*.log
+.idea/
+.vscode/
+.DS_Store
+*.pem
+*.key
+
+__pycache__/
+*.pyc
