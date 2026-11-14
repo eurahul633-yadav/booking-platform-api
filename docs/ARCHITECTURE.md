@@ -1,52 +1,57 @@
 # Architecture
 
-## Boundary
+## Modules
 
-A modular monolith with one deployable API and PostgreSQL as the source of truth. Redis holds expendable catalogue cache and distributed request counters. There is no frontend, payment processor, queue worker or Kubernetes deployment in 0.1.
+A single Spring Boot deployable with explicit service boundaries. PostgreSQL is the source of truth. Redis holds expendable catalogue cache and distributed request counters. The persistence adapter is Spring JDBC; no JPA/Hibernate is used.
 
 | Component | Responsibility |
 | --- | --- |
-| `AuthController`, `SessionService` | Workspace/customer signup, credential verification, token/session lifecycle |
-| `SecurityConfig`, `RateLimitFilter` | Authentication, cookie CSRF, CORS, distributed request budgets |
-| `CatalogService` | Tenant-scoped providers/services, provider window validation, catalogue cache |
-| `BookingService` | Booking transaction, idempotency, cancellation, slot discovery, audit event |
-| `BookingController` | Validated HTTP input/output |
-| `Errors` | Sanitized failures and Problem Details |
-| Flyway SQL | Relational invariants, constraints and indexes |
+| SessionService / SecurityConfig | Authentication, token/session revocation, CSRF, CORS and filter chain |
+| IdentityService | Profiles, password changes, users and provider/customer/guardian invitations |
+| BusinessService | Tenant policy, locations/rooms, ownership and service-assignment checks |
+| CatalogService | Provider/service catalogue and explicit availability |
+| BookingService / Commands | Private appointments, atomic batches, rescheduling, scoped command idempotency |
+| SchedulingService | Shared-capacity sessions, weekly expansion, enrolment, blockouts and guarded window removal |
+| NotificationService | Transactional booking events and local notification records |
+| RequestBodyLimitFilter / RateLimitFilter | Bounded body allocation and shared request budgets |
+| SDK / OpenAPI / Postman | Consumer interface, schemas and examples |
 
-Classes currently share one base package. Split by feature into auth, tenancy, catalogue, scheduling, payments and notifications as the modules grow; do not begin with distributed services merely to present a larger architecture.
+Classes currently share one base package. Package/module extraction can follow these service boundaries as the next domains grow. External payment and delivery workers are not part of this release.
 
-## Booking transaction
+## Resource and seat invariants
 
-1. Lock the authenticated customer's row, serializing their retries and changes that compete on the same idempotency namespace.
-2. Look up the tenant/customer/key. Return the existing booking if provider, service and exact start match; reject a mismatched payload.
-3. Lock the tenant-scoped provider row; read the service duration and cancellation policy.
-4. Validate the future range and containment in a published availability window.
-5. Insert the booking. PostgreSQL GiST exclusion constraints reject overlapping confirmed provider/customer ranges. Ranges are half open `[start,end)` so an appointment can start when the previous one ends.
-6. Insert the booking event in the same transaction, then commit.
+`resource_occupancy` has one row per confirmed private booking, open group session or blockout. GiST exclusion constraints reject overlapping provider ranges and overlapping non-null room ranges. Half-open `[start,end)` ranges allow adjacent appointments.
 
-Row locks reduce contention races in application flows, while database exclusion constraints remain the final invariant even if another future code path writes bookings. A 409 rolls back the whole transaction. Provider UUIDs are globally unique; composite tenant/resource foreign keys prohibit cross-tenant associations.
+Flyway V2 backfills occupancy for V1 confirmed appointments. Database triggers synchronize private-booking/session reservations on inserts and updates, so another internal writer cannot accidentally bypass resource conflicts by omitting an explicit Java reservation call. Customer range exclusions still apply to every confirmed booking, including group enrolments. The session enrolment trigger locks the session, checks capacity and verifies that each enrolment matches its session's resources and times.
 
-## Availability and time
+A private booking is one customer/one resource reservation. A group session is one reservation with multiple customer bookings. Cancellation of one group booking releases a seat but retains the shared reservation. Cancelling the whole session updates every active booking, records notifications/events and releases resources in one transaction.
 
-Version 0.1 stores explicit absolute windows. IANA provider zones are display/recurrence metadata; slot calculations operate on instants. Clients must convert local time with the intended offset and resolve ambiguous/nonexistent DST times before sending. Recurring local-time schedules require an explicit DST policy in a later module.
+## Transaction and locking
 
-Slot suggestions are anchored at each window's start and advance by service duration. Direct booking accepts any start contained by a window; it is not restricted to suggested grid points. All tenant services are currently bookable with all tenant providers. Provider-to-service assignment is a planned constraint.
+Commands lock the actor row for a stable per-user idempotency namespace. Scheduling writes then lock the provider; enrolment also locks the session. Multi-provider private batches pre-lock distinct providers in sorted UUID order. Booking cancellation/rescheduling use the same actor/provider order before locking the booking. Database constraints remain the final invariant for different providers competing for one room.
 
-A window cannot overlap another window for its provider. Adjacent windows remain distinct; an appointment must fit within one window. Availability deletion/editing and blockouts are not exposed yet, avoiding undefined effects on confirmed appointments.
+A rejected overlap/capacity/customer constraint rolls back all writes, including audit/notification records. Lock or statement timeouts/deadlocks return retryable failures where classified by Spring. They do not leave partially booked batches or series.
 
-## Security model
+Rescheduling updates the current booking while retaining original request fields for safe late create retries. Command request hashes are derived from validated canonical records; replay checks the body before returning existing resource IDs. Command records are not a payment idempotency ledger and should not be reused as one.
 
-A user belongs to one tenant and has ADMIN or CUSTOMER role. The ADMIN can configure the catalogue and see tenant bookings; CUSTOMER sees only their own. Neither can read another tenant. Workspace registration creates the first ADMIN; customer registration cannot select a role.
+## Permissions and tenancy
 
-Opaque random tokens contain 256 bits of entropy, are stored only as SHA-256 hashes, and expire server-side. A database lookup per authenticated request provides immediate revocation and current roles without a JWT revocation layer. Session kinds are distinct: a browser token cannot be used as a bearer token and vice versa. BCrypt cost 12 is used for passwords. Passwords are limited to 72 UTF-8 bytes to avoid BCrypt truncation.
+Every service scopes resources to the authenticated tenant. Composite tenant/resource foreign keys prevent cross-tenant associations. ADMIN controls business configuration and catalogue. PROVIDER accounts are linked to one provider by an accepted hashed-token invitation; they manage only that provider's scheduling resources and see its bookings. CUSTOMER/GUARDIAN currently manage only their own bookings. Guarded user/profile endpoints do not expose password/token hashes.
 
-## Cache consistency
+Custom opaque-token authentication uses explicit session handling, rather than Spring's automatic session authentication strategy. Cookie login rotates CSRF explicitly; bootstrap and credential endpoints ignore stale browser authentication cookies while still requiring CSRF for unsafe requests. Invalid bearer headers remain rejected.
 
-Only service-list catalogue reads are cached, keyed by tenant, page and page size. Entries expire after 30 seconds; newly created services may take that long to appear in a cached list. Booking and service-detail validation reads PostgreSQL directly. Availability, authentication and booking records are never cached. Cache read/write failures fall back to PostgreSQL. Request limiting fails closed with 503 if Redis is unavailable.
+A user belongs to one tenant. Provider/account relationships are distinct from future instructor/student or guardian/dependant relationships. Public signup is configurable. Invitation acceptance creates a new user; merging an invitation into an existing account is not implemented.
 
-## Scaling path
+## Time and recurrence
 
-Multiple API replicas share PostgreSQL and Redis; there is no in-process session or local lock. Connection budgets must account for replica count. Provider locks serialize one provider's competing writes; measure this before replacing them. Use an outbox and bounded worker pool for notifications/payment effects; do not call external services inside booking transactions. The existing booking_events table is an audit log, **not** a delivery outbox: it has no leases, retries or acknowledgement state.
+Single bookings/windows are explicit instants. Weekly group-session expansion derives provider-local date/time, expands by whole weeks and resolves each date using IANA zone rules. A gap or overlap rejects the whole expansion. All occurrences must fit published windows and current policy. Series expansion is bounded; there is no unbounded recurrence generation.
 
-Before large datasets, add keyset pagination, bounded availability materialization, retention/partitioning of audit data, and query-plan/load tests. Horizontal scaling and index design do not establish a capacity or latency guarantee.
+Availability remains explicit rather than a working-hours rule engine. Slot suggestions use a duration-based grid. Provider/location assignment, buffer times, recurring blockouts and working-hour exceptions are planned extensions.
+
+## Cache, events and scaling
+
+Only service-list reads are cached for 30 seconds, keyed by tenant/page/size. Booking, identity and availability/capacity checks use PostgreSQL. New catalogue entries may take 30 seconds to appear in a cached list. Cache failure falls back to PostgreSQL; the Redis-backed request limiter fails closed.
+
+Audit events and local notifications commit alongside booking state. There is no claim that these records were delivered externally: no email, SMS or push request is sent. A future transactional outbox needs delivery state, leases, retries, backoff and dead-letter handling before adding integrations.
+
+Multiple replicas can share PostgreSQL/Redis without local sessions/locks. Capacity, latency and fairness must still be measured. Provider-level serialization trades throughput for simple correctness; query plans, contention tests and connection budgets should guide later changes. These mechanisms are not proof of a particular production scale.

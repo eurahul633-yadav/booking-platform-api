@@ -20,16 +20,19 @@ public class CatalogService {
   private final StringRedisTemplate redis;
   private final ObjectMapper json;
   private final boolean cache;
+  private final BusinessService business;
 
   public CatalogService(
       JdbcClient db,
       StringRedisTemplate redis,
       ObjectMapper json,
-      @Value("${app.cache-enabled}") boolean cache) {
+      @Value("${app.cache-enabled}") boolean cache,
+      BusinessService business) {
     this.db = db;
     this.redis = redis;
     this.json = json;
     this.cache = cache;
+    this.business = business;
   }
 
   public Provider provider(Actor actor, UUID id) {
@@ -154,7 +157,7 @@ public class CatalogService {
 
   @Transactional
   public Window addWindow(Actor actor, UUID provider, AvailabilityRequest r) {
-    actor.requireAdmin();
+    business.requireProviderManager(actor, provider);
     lockProvider(actor, provider);
     validateRange(r.startsAt(), r.endsAt(), Duration.ofDays(7));
     if (!r.startsAt().isAfter(Instant.now()))

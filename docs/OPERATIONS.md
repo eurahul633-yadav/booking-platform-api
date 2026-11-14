@@ -24,11 +24,11 @@ Rate limits use atomic Redis increment/expire counters shared by replicas: 15 au
 
 The service ignores forwarded headers. Behind a load balancer all users may appear to share the proxy address. Configure a trusted ingress to enforce per-client limits and connection/body timeouts before production. Do not blindly trust arbitrary X-Forwarded-For from the internet. Email/account-specific abuse protection is still planned.
 
-Enforce a 64 KiB JSON request-body cap and bounded request duration at ingress. The configured Tomcat form cap applies to form bodies, not JSON. The API uses JSON validation but that alone does not bound body allocation. Configure TLS and CORS for the final deployment; a separate registrable domain requires bearer authentication in this release.
+The API enforces a 64 KiB request-body cap for unsafe API requests, including unknown-length bodies, before JSON parsing. Also enforce bounded request duration/connections at ingress; the Tomcat form cap alone does not bound JSON. Configure TLS and CORS for the final deployment; a separate registrable domain requires bearer authentication in this release.
 
 ## Database and contention
 
-The pool is capped at 10 connections by default. Every pooled connection sets a five-second PostgreSQL statement timeout. Long waits result in a retryable 503 where Spring classifies the timeout/lock failure. Do not retry forever. Keep the same booking idempotency key when a response is unknown. Session cleanup runs hourly and is safe on multiple replicas; large session tables need batched retention work later.
+The pool is capped at 10 connections by default. Every pooled connection sets a five-second PostgreSQL statement timeout. Long waits result in a retryable 503 where Spring classifies the timeout/lock failure. Do not retry forever. Keep the same command idempotency key and exact body when a response is unknown. Session cleanup runs hourly and is safe on multiple replicas; large session tables need batched retention work later.
 
 Preserve the exclusion constraints on PostgreSQL. H2/SQLite substitutes cannot validate the same concurrency semantics. Availability/scheduling writes and audit inserts commit together where relevant.
 

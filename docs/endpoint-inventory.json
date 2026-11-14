@@ -1,0 +1,2530 @@
+{
+  "schemaVersion": 1,
+  "legacyPathCount": 273,
+  "legacyAliasesImplemented": false,
+  "mappingBasis": "Endpoint names only. Feature mapping is inferred; request/response compatibility and behavioural parity are not established.",
+  "entries": [
+    {
+      "legacyPath": "/validateactivereceipt",
+      "domain": "Subscriptions and app-store billing",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Receipt verification, lifecycle reconciliation and entitlement contracts are not implemented."
+    },
+    {
+      "legacyPath": "/ll_subscription_purchased",
+      "domain": "Subscriptions and app-store billing",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Receipt verification, lifecycle reconciliation and entitlement contracts are not implemented."
+    },
+    {
+      "legacyPath": "/statusiosubscription",
+      "domain": "Subscriptions and app-store billing",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Receipt verification, lifecycle reconciliation and entitlement contracts are not implemented."
+    },
+    {
+      "legacyPath": "/handleAppleNotification",
+      "domain": "Subscriptions and app-store billing",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Receipt verification, lifecycle reconciliation and entitlement contracts are not implemented."
+    },
+    {
+      "legacyPath": "/fetchLatestVersion",
+      "domain": "Application configuration",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/business/settings",
+        "PUT /api/v1/business/settings",
+        "GET /api/v1/capabilities"
+      ],
+      "note": "Booking policies and capabilities work; application versioning, arbitrary fields and onboarding screens remain planned."
+    },
+    {
+      "legacyPath": "/plm_login",
+      "domain": "Authentication",
+      "status": "AVAILABLE",
+      "canonicalInterfaces": [
+        "POST /api/v1/auth/token",
+        "POST /api/v1/auth/login",
+        "POST /api/v1/auth/logout"
+      ],
+      "note": "Canonical authentication uses credential POSTs; legacy GET login routes are not registered."
+    },
+    {
+      "legacyPath": "/plm_createaccount",
+      "domain": "Account registration",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/auth/workspaces",
+        "POST /api/v1/auth/register",
+        "POST /api/v1/invitations",
+        "POST /api/v1/auth/invitations/accept"
+      ],
+      "note": "Workspace owners, customers and invited provider/guardian accounts work; specialised legacy onboarding is not reproduced."
+    },
+    {
+      "legacyPath": "/plm_createaccount_parent",
+      "domain": "Account registration",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/auth/workspaces",
+        "POST /api/v1/auth/register",
+        "POST /api/v1/invitations",
+        "POST /api/v1/auth/invitations/accept"
+      ],
+      "note": "Workspace owners, customers and invited provider/guardian accounts work; specialised legacy onboarding is not reproduced."
+    },
+    {
+      "legacyPath": "/forgotpassword",
+      "domain": "Password recovery",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Self-service password changes exist; email/OTP recovery and delivery are not implemented."
+    },
+    {
+      "legacyPath": "/resetpassword",
+      "domain": "Password recovery",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Self-service password changes exist; email/OTP recovery and delivery are not implemented."
+    },
+    {
+      "legacyPath": "/getinvitation",
+      "domain": "Invitations and relationships",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/invitations",
+        "GET /api/v1/invitations",
+        "POST /api/v1/invitations/{id}/revoke",
+        "POST /api/v1/auth/invitations/accept"
+      ],
+      "note": "Administrative account invitations work; coach/student relationship requests, approvals and link workflows remain planned."
+    },
+    {
+      "legacyPath": "/declineinvitation",
+      "domain": "Invitations and relationships",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/invitations",
+        "GET /api/v1/invitations",
+        "POST /api/v1/invitations/{id}/revoke",
+        "POST /api/v1/auth/invitations/accept"
+      ],
+      "note": "Administrative account invitations work; coach/student relationship requests, approvals and link workflows remain planned."
+    },
+    {
+      "legacyPath": "/deleteinvitation",
+      "domain": "Invitations and relationships",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/invitations",
+        "GET /api/v1/invitations",
+        "POST /api/v1/invitations/{id}/revoke",
+        "POST /api/v1/auth/invitations/accept"
+      ],
+      "note": "Administrative account invitations work; coach/student relationship requests, approvals and link workflows remain planned."
+    },
+    {
+      "legacyPath": "/getpendinginvitation",
+      "domain": "Invitations and relationships",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/invitations",
+        "GET /api/v1/invitations",
+        "POST /api/v1/invitations/{id}/revoke",
+        "POST /api/v1/auth/invitations/accept"
+      ],
+      "note": "Administrative account invitations work; coach/student relationship requests, approvals and link workflows remain planned."
+    },
+    {
+      "legacyPath": "/sendinvitation",
+      "domain": "Invitations and relationships",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/invitations",
+        "GET /api/v1/invitations",
+        "POST /api/v1/invitations/{id}/revoke",
+        "POST /api/v1/auth/invitations/accept"
+      ],
+      "note": "Administrative account invitations work; coach/student relationship requests, approvals and link workflows remain planned."
+    },
+    {
+      "legacyPath": "/approveinvitation",
+      "domain": "Invitations and relationships",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/invitations",
+        "GET /api/v1/invitations",
+        "POST /api/v1/invitations/{id}/revoke",
+        "POST /api/v1/auth/invitations/accept"
+      ],
+      "note": "Administrative account invitations work; coach/student relationship requests, approvals and link workflows remain planned."
+    },
+    {
+      "legacyPath": "/newcoachinvitation",
+      "domain": "Invitations and relationships",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/invitations",
+        "GET /api/v1/invitations",
+        "POST /api/v1/invitations/{id}/revoke",
+        "POST /api/v1/auth/invitations/accept"
+      ],
+      "note": "Administrative account invitations work; coach/student relationship requests, approvals and link workflows remain planned."
+    },
+    {
+      "legacyPath": "/newcoachinvite",
+      "domain": "Invitations and relationships",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/invitations",
+        "GET /api/v1/invitations",
+        "POST /api/v1/invitations/{id}/revoke",
+        "POST /api/v1/auth/invitations/accept"
+      ],
+      "note": "Administrative account invitations work; coach/student relationship requests, approvals and link workflows remain planned."
+    },
+    {
+      "legacyPath": "/updatexpirydate",
+      "domain": "Invitations and relationships",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/invitations"
+      ],
+      "note": "Invitations have expiry and revocation; changing the expiry is not exposed."
+    },
+    {
+      "legacyPath": "/getstudentlist",
+      "domain": "Identity and profiles",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/me/profile",
+        "PUT /api/v1/me/profile",
+        "GET /api/v1/users",
+        "GET /api/v1/users/{id}"
+      ],
+      "note": "Own profile and admin user listing work; location membership/coach relationships require additional contracts."
+    },
+    {
+      "legacyPath": "/getcoachlist",
+      "domain": "Provider catalogue",
+      "status": "AVAILABLE",
+      "canonicalInterfaces": [
+        "GET /api/v1/providers"
+      ],
+      "note": "Providers are tenant-scoped; detailed legacy provider response fields are not reproduced."
+    },
+    {
+      "legacyPath": "/getstudentcoaches",
+      "domain": "Invitations and relationships",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/invitations",
+        "GET /api/v1/invitations",
+        "POST /api/v1/invitations/{id}/revoke",
+        "POST /api/v1/auth/invitations/accept"
+      ],
+      "note": "Administrative account invitations work; coach/student relationship requests, approvals and link workflows remain planned."
+    },
+    {
+      "legacyPath": "/getstudentcoachesdata",
+      "domain": "Invitations and relationships",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/invitations",
+        "GET /api/v1/invitations",
+        "POST /api/v1/invitations/{id}/revoke",
+        "POST /api/v1/auth/invitations/accept"
+      ],
+      "note": "Administrative account invitations work; coach/student relationship requests, approvals and link workflows remain planned."
+    },
+    {
+      "legacyPath": "/getmanagedstudentcoachesdata",
+      "domain": "Guardians and managed students",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "GUARDIAN accounts can be invited; dependent identities and booking on behalf of students are not implemented."
+    },
+    {
+      "legacyPath": "/getnewstudentcoachesdata",
+      "domain": "Invitations and relationships",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/invitations",
+        "GET /api/v1/invitations",
+        "POST /api/v1/invitations/{id}/revoke",
+        "POST /api/v1/auth/invitations/accept"
+      ],
+      "note": "Administrative account invitations work; coach/student relationship requests, approvals and link workflows remain planned."
+    },
+    {
+      "legacyPath": "/getuserdetails",
+      "domain": "Identity and profiles",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/me/profile",
+        "PUT /api/v1/me/profile",
+        "GET /api/v1/users",
+        "GET /api/v1/users/{id}"
+      ],
+      "note": "Own profile and admin user listing work; location membership/coach relationships require additional contracts."
+    },
+    {
+      "legacyPath": "/loginuserdetails",
+      "domain": "Identity and profiles",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/me/profile",
+        "PUT /api/v1/me/profile",
+        "GET /api/v1/users",
+        "GET /api/v1/users/{id}"
+      ],
+      "note": "Own profile and admin user listing work; location membership/coach relationships require additional contracts."
+    },
+    {
+      "legacyPath": "/sendotp",
+      "domain": "Phone verification",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "No phone lookup, OTP delivery or OTP verification is exposed."
+    },
+    {
+      "legacyPath": "/checkphonexist",
+      "domain": "Phone verification",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "No phone lookup, OTP delivery or OTP verification is exposed."
+    },
+    {
+      "legacyPath": "/checkphonexist2",
+      "domain": "Phone verification",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "No phone lookup, OTP delivery or OTP verification is exposed."
+    },
+    {
+      "legacyPath": "/getnotsignedscreens",
+      "domain": "Application configuration",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/business/settings",
+        "PUT /api/v1/business/settings",
+        "GET /api/v1/capabilities"
+      ],
+      "note": "Booking policies and capabilities work; application versioning, arbitrary fields and onboarding screens remain planned."
+    },
+    {
+      "legacyPath": "/settingsapi",
+      "domain": "Application configuration",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/business/settings",
+        "PUT /api/v1/business/settings",
+        "GET /api/v1/capabilities"
+      ],
+      "note": "Booking policies and capabilities work; application versioning, arbitrary fields and onboarding screens remain planned."
+    },
+    {
+      "legacyPath": "/getsettingsapi",
+      "domain": "Application configuration",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/business/settings",
+        "PUT /api/v1/business/settings",
+        "GET /api/v1/capabilities"
+      ],
+      "note": "Booking policies and capabilities work; application versioning, arbitrary fields and onboarding screens remain planned."
+    },
+    {
+      "legacyPath": "/getscheduledlessons",
+      "domain": "Booking discovery and lifecycle",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/bookings",
+        "GET /api/v1/bookings/{id}",
+        "POST /api/v1/bookings",
+        "POST /api/v1/bookings/batch"
+      ],
+      "note": "Tenant/customer/provider scoped lists and booking creation work; specialised history filters and legacy payload compatibility are not implemented."
+    },
+    {
+      "legacyPath": "/getscheduledlessons_managed",
+      "domain": "Booking discovery and lifecycle",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/bookings",
+        "GET /api/v1/bookings/{id}",
+        "POST /api/v1/bookings",
+        "POST /api/v1/bookings/batch"
+      ],
+      "note": "Tenant/customer/provider scoped lists and booking creation work; specialised history filters and legacy payload compatibility are not implemented."
+    },
+    {
+      "legacyPath": "/studentlessonshistory",
+      "domain": "Booking discovery and lifecycle",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/bookings",
+        "GET /api/v1/bookings/{id}",
+        "POST /api/v1/bookings",
+        "POST /api/v1/bookings/batch"
+      ],
+      "note": "Tenant/customer/provider scoped lists and booking creation work; specialised history filters and legacy payload compatibility are not implemented."
+    },
+    {
+      "legacyPath": "/studentslessonshistory",
+      "domain": "Booking discovery and lifecycle",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/bookings",
+        "GET /api/v1/bookings/{id}",
+        "POST /api/v1/bookings",
+        "POST /api/v1/bookings/batch"
+      ],
+      "note": "Tenant/customer/provider scoped lists and booking creation work; specialised history filters and legacy payload compatibility are not implemented."
+    },
+    {
+      "legacyPath": "/studentslessonshistorypaging",
+      "domain": "Booking discovery and lifecycle",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/bookings",
+        "GET /api/v1/bookings/{id}",
+        "POST /api/v1/bookings",
+        "POST /api/v1/bookings/batch"
+      ],
+      "note": "Tenant/customer/provider scoped lists and booking creation work; specialised history filters and legacy payload compatibility are not implemented."
+    },
+    {
+      "legacyPath": "/coachavailability",
+      "domain": "Availability and sessions",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/providers/{id}/slots",
+        "GET /api/v1/providers/{id}/availability",
+        "POST /api/v1/providers/{id}/availability",
+        "DELETE /api/v1/providers/{id}/availability/{window}",
+        "POST /api/v1/sessions",
+        "POST /api/v1/session-series"
+      ],
+      "note": "Explicit windows, slots and scheduled group sessions work; recurring local working hours and legacy schedule editing do not."
+    },
+    {
+      "legacyPath": "/instructordashboardata",
+      "domain": "Reporting and dashboards",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/booking-events"
+      ],
+      "note": "Audit events work; financial/attendance dashboards and date-based aggregate reporting do not."
+    },
+    {
+      "legacyPath": "/coachscheduledlessons",
+      "domain": "Availability and sessions",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/providers/{id}/slots",
+        "GET /api/v1/providers/{id}/availability",
+        "POST /api/v1/providers/{id}/availability",
+        "DELETE /api/v1/providers/{id}/availability/{window}",
+        "POST /api/v1/sessions",
+        "POST /api/v1/session-series"
+      ],
+      "note": "Explicit windows, slots and scheduled group sessions work; recurring local working hours and legacy schedule editing do not."
+    },
+    {
+      "legacyPath": "/change_password_account",
+      "domain": "Identity and profiles",
+      "status": "AVAILABLE",
+      "canonicalInterfaces": [
+        "POST /api/v1/me/password"
+      ],
+      "note": "Requires current password; revokes all sessions."
+    },
+    {
+      "legacyPath": "/add_custom_field",
+      "domain": "Application configuration",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/business/settings",
+        "PUT /api/v1/business/settings",
+        "GET /api/v1/capabilities"
+      ],
+      "note": "Booking policies and capabilities work; application versioning, arbitrary fields and onboarding screens remain planned."
+    },
+    {
+      "legacyPath": "/add_new_location",
+      "domain": "Locations and rooms",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/locations",
+        "GET /api/v1/locations",
+        "PUT /api/v1/locations/{id}",
+        "POST /api/v1/locations/{id}/rooms"
+      ],
+      "note": "Location/room creation and location edits work; portal membership, location deletion and company profile extensions remain planned."
+    },
+    {
+      "legacyPath": "/edit_location",
+      "domain": "Locations and rooms",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/locations",
+        "GET /api/v1/locations",
+        "PUT /api/v1/locations/{id}",
+        "POST /api/v1/locations/{id}/rooms"
+      ],
+      "note": "Location/room creation and location edits work; portal membership, location deletion and company profile extensions remain planned."
+    },
+    {
+      "legacyPath": "/delete_location",
+      "domain": "Locations and rooms",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/locations",
+        "GET /api/v1/locations",
+        "PUT /api/v1/locations/{id}",
+        "POST /api/v1/locations/{id}/rooms"
+      ],
+      "note": "Location/room creation and location edits work; portal membership, location deletion and company profile extensions remain planned."
+    },
+    {
+      "legacyPath": "/my_availability",
+      "domain": "Availability and sessions",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/providers/{id}/slots",
+        "GET /api/v1/providers/{id}/availability",
+        "POST /api/v1/providers/{id}/availability",
+        "DELETE /api/v1/providers/{id}/availability/{window}",
+        "POST /api/v1/sessions",
+        "POST /api/v1/session-series"
+      ],
+      "note": "Explicit windows, slots and scheduled group sessions work; recurring local working hours and legacy schedule editing do not."
+    },
+    {
+      "legacyPath": "/schedule_availability",
+      "domain": "Availability and sessions",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/providers/{id}/slots",
+        "GET /api/v1/providers/{id}/availability",
+        "POST /api/v1/providers/{id}/availability",
+        "DELETE /api/v1/providers/{id}/availability/{window}",
+        "POST /api/v1/sessions",
+        "POST /api/v1/session-series"
+      ],
+      "note": "Explicit windows, slots and scheduled group sessions work; recurring local working hours and legacy schedule editing do not."
+    },
+    {
+      "legacyPath": "/student_myavailability",
+      "domain": "Availability and sessions",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/providers/{id}/slots",
+        "GET /api/v1/providers/{id}/availability",
+        "POST /api/v1/providers/{id}/availability",
+        "DELETE /api/v1/providers/{id}/availability/{window}",
+        "POST /api/v1/sessions",
+        "POST /api/v1/session-series"
+      ],
+      "note": "Explicit windows, slots and scheduled group sessions work; recurring local working hours and legacy schedule editing do not."
+    },
+    {
+      "legacyPath": "/student_availability",
+      "domain": "Availability and sessions",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/providers/{id}/slots",
+        "GET /api/v1/providers/{id}/availability",
+        "POST /api/v1/providers/{id}/availability",
+        "DELETE /api/v1/providers/{id}/availability/{window}",
+        "POST /api/v1/sessions",
+        "POST /api/v1/session-series"
+      ],
+      "note": "Explicit windows, slots and scheduled group sessions work; recurring local working hours and legacy schedule editing do not."
+    },
+    {
+      "legacyPath": "/student_schedule_Availability",
+      "domain": "Availability and sessions",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/providers/{id}/slots",
+        "GET /api/v1/providers/{id}/availability",
+        "POST /api/v1/providers/{id}/availability",
+        "DELETE /api/v1/providers/{id}/availability/{window}",
+        "POST /api/v1/sessions",
+        "POST /api/v1/session-series"
+      ],
+      "note": "Explicit windows, slots and scheduled group sessions work; recurring local working hours and legacy schedule editing do not."
+    },
+    {
+      "legacyPath": "/student_availability2",
+      "domain": "Availability and sessions",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/providers/{id}/slots",
+        "GET /api/v1/providers/{id}/availability",
+        "POST /api/v1/providers/{id}/availability",
+        "DELETE /api/v1/providers/{id}/availability/{window}",
+        "POST /api/v1/sessions",
+        "POST /api/v1/session-series"
+      ],
+      "note": "Explicit windows, slots and scheduled group sessions work; recurring local working hours and legacy schedule editing do not."
+    },
+    {
+      "legacyPath": "/closelessons",
+      "domain": "Attendance and retention",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Attendance/completion and destructive bulk deletion require separate lifecycle/retention contracts."
+    },
+    {
+      "legacyPath": "/getnotcloselessoncounts",
+      "domain": "Attendance and retention",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Attendance/completion and destructive bulk deletion require separate lifecycle/retention contracts."
+    },
+    {
+      "legacyPath": "/closedlessonshistory",
+      "domain": "Attendance and retention",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Attendance/completion and destructive bulk deletion require separate lifecycle/retention contracts."
+    },
+    {
+      "legacyPath": "/closedlessonshistorypaging",
+      "domain": "Attendance and retention",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Attendance/completion and destructive bulk deletion require separate lifecycle/retention contracts."
+    },
+    {
+      "legacyPath": "/markedlesson",
+      "domain": "Attendance and retention",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Attendance/completion and destructive bulk deletion require separate lifecycle/retention contracts."
+    },
+    {
+      "legacyPath": "/markedalllesson",
+      "domain": "Attendance and retention",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Attendance/completion and destructive bulk deletion require separate lifecycle/retention contracts."
+    },
+    {
+      "legacyPath": "/create_schedule_api",
+      "domain": "Availability and sessions",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/providers/{id}/slots",
+        "GET /api/v1/providers/{id}/availability",
+        "POST /api/v1/providers/{id}/availability",
+        "DELETE /api/v1/providers/{id}/availability/{window}",
+        "POST /api/v1/sessions",
+        "POST /api/v1/session-series"
+      ],
+      "note": "Explicit windows, slots and scheduled group sessions work; recurring local working hours and legacy schedule editing do not."
+    },
+    {
+      "legacyPath": "/create_coach_schedule",
+      "domain": "Availability and sessions",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/providers/{id}/slots",
+        "GET /api/v1/providers/{id}/availability",
+        "POST /api/v1/providers/{id}/availability",
+        "DELETE /api/v1/providers/{id}/availability/{window}",
+        "POST /api/v1/sessions",
+        "POST /api/v1/session-series"
+      ],
+      "note": "Explicit windows, slots and scheduled group sessions work; recurring local working hours and legacy schedule editing do not."
+    },
+    {
+      "legacyPath": "/edit_coachschedule",
+      "domain": "Availability and sessions",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/providers/{id}/slots",
+        "GET /api/v1/providers/{id}/availability",
+        "POST /api/v1/providers/{id}/availability",
+        "DELETE /api/v1/providers/{id}/availability/{window}",
+        "POST /api/v1/sessions",
+        "POST /api/v1/session-series"
+      ],
+      "note": "Explicit windows, slots and scheduled group sessions work; recurring local working hours and legacy schedule editing do not."
+    },
+    {
+      "legacyPath": "/add_coach_lesson_product",
+      "domain": "Service catalogue",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/services",
+        "POST /api/v1/services",
+        "PUT /api/v1/providers/{id}/services",
+        "GET /api/v1/sessions"
+      ],
+      "note": "Service durations/policies and provider assignment work; prices, predefined-product attributes and catalogue edit/archive remain planned."
+    },
+    {
+      "legacyPath": "/edit_coach_lesson_product",
+      "domain": "Service catalogue",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/services",
+        "POST /api/v1/services",
+        "PUT /api/v1/providers/{id}/services",
+        "GET /api/v1/sessions"
+      ],
+      "note": "Service durations/policies and provider assignment work; prices, predefined-product attributes and catalogue edit/archive remain planned."
+    },
+    {
+      "legacyPath": "/get_all_lessons",
+      "domain": "Service catalogue",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/services",
+        "POST /api/v1/services",
+        "PUT /api/v1/providers/{id}/services",
+        "GET /api/v1/sessions"
+      ],
+      "note": "Service durations/policies and provider assignment work; prices, predefined-product attributes and catalogue edit/archive remain planned."
+    },
+    {
+      "legacyPath": "/savecoachnotes",
+      "domain": "Coaching notes",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Visibility, authorship and note-editing rules need a dedicated contract."
+    },
+    {
+      "legacyPath": "/savestudentnotes",
+      "domain": "Coaching notes",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Visibility, authorship and note-editing rules need a dedicated contract."
+    },
+    {
+      "legacyPath": "/coach_notes_to_linkreq",
+      "domain": "Invitations and relationships",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/invitations",
+        "GET /api/v1/invitations",
+        "POST /api/v1/invitations/{id}/revoke",
+        "POST /api/v1/auth/invitations/accept"
+      ],
+      "note": "Administrative account invitations work; coach/student relationship requests, approvals and link workflows remain planned."
+    },
+    {
+      "legacyPath": "/delete_relationship",
+      "domain": "Invitations and relationships",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/invitations",
+        "GET /api/v1/invitations",
+        "POST /api/v1/invitations/{id}/revoke",
+        "POST /api/v1/auth/invitations/accept"
+      ],
+      "note": "Administrative account invitations work; coach/student relationship requests, approvals and link workflows remain planned."
+    },
+    {
+      "legacyPath": "/update_category_name",
+      "domain": "Categories, tags and custom fields",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Custom taxonomy, filtering and tag management are not implemented."
+    },
+    {
+      "legacyPath": "/delete_coachschedule",
+      "domain": "Availability and sessions",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/providers/{id}/slots",
+        "GET /api/v1/providers/{id}/availability",
+        "POST /api/v1/providers/{id}/availability",
+        "DELETE /api/v1/providers/{id}/availability/{window}",
+        "POST /api/v1/sessions",
+        "POST /api/v1/session-series"
+      ],
+      "note": "Explicit windows, slots and scheduled group sessions work; recurring local working hours and legacy schedule editing do not."
+    },
+    {
+      "legacyPath": "/delete_coachschedule_block",
+      "domain": "Provider blockouts",
+      "status": "AVAILABLE",
+      "canonicalInterfaces": [
+        "POST /api/v1/providers/{id}/blockouts",
+        "GET /api/v1/providers/{id}/blockouts",
+        "DELETE /api/v1/providers/{id}/blockouts/{block}"
+      ],
+      "note": "Explicit blockouts participate in shared conflict constraints."
+    },
+    {
+      "legacyPath": "/delete_category",
+      "domain": "Categories, tags and custom fields",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Custom taxonomy, filtering and tag management are not implemented."
+    },
+    {
+      "legacyPath": "/deletecontact",
+      "domain": "Invitations and relationships",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/invitations",
+        "GET /api/v1/invitations",
+        "POST /api/v1/invitations/{id}/revoke",
+        "POST /api/v1/auth/invitations/accept"
+      ],
+      "note": "Administrative account invitations work; coach/student relationship requests, approvals and link workflows remain planned."
+    },
+    {
+      "legacyPath": "/relinkedcoach",
+      "domain": "Invitations and relationships",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/invitations",
+        "GET /api/v1/invitations",
+        "POST /api/v1/invitations/{id}/revoke",
+        "POST /api/v1/auth/invitations/accept"
+      ],
+      "note": "Administrative account invitations work; coach/student relationship requests, approvals and link workflows remain planned."
+    },
+    {
+      "legacyPath": "/asklinklinkcoach",
+      "domain": "Invitations and relationships",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/invitations",
+        "GET /api/v1/invitations",
+        "POST /api/v1/invitations/{id}/revoke",
+        "POST /api/v1/auth/invitations/accept"
+      ],
+      "note": "Administrative account invitations work; coach/student relationship requests, approvals and link workflows remain planned."
+    },
+    {
+      "legacyPath": "/unlinkcoach",
+      "domain": "Invitations and relationships",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/invitations",
+        "GET /api/v1/invitations",
+        "POST /api/v1/invitations/{id}/revoke",
+        "POST /api/v1/auth/invitations/accept"
+      ],
+      "note": "Administrative account invitations work; coach/student relationship requests, approvals and link workflows remain planned."
+    },
+    {
+      "legacyPath": "/insert_new_category",
+      "domain": "Categories, tags and custom fields",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Custom taxonomy, filtering and tag management are not implemented."
+    },
+    {
+      "legacyPath": "/set_default_category",
+      "domain": "Categories, tags and custom fields",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Custom taxonomy, filtering and tag management are not implemented."
+    },
+    {
+      "legacyPath": "/coach_blockedschedules",
+      "domain": "Provider blockouts",
+      "status": "AVAILABLE",
+      "canonicalInterfaces": [
+        "POST /api/v1/providers/{id}/blockouts",
+        "GET /api/v1/providers/{id}/blockouts",
+        "DELETE /api/v1/providers/{id}/blockouts/{block}"
+      ],
+      "note": "Explicit blockouts participate in shared conflict constraints."
+    },
+    {
+      "legacyPath": "/create_coach_scheduleblock",
+      "domain": "Provider blockouts",
+      "status": "AVAILABLE",
+      "canonicalInterfaces": [
+        "POST /api/v1/providers/{id}/blockouts",
+        "GET /api/v1/providers/{id}/blockouts",
+        "DELETE /api/v1/providers/{id}/blockouts/{block}"
+      ],
+      "note": "Explicit blockouts participate in shared conflict constraints."
+    },
+    {
+      "legacyPath": "/edit_coachscheduleblock",
+      "domain": "Provider blockouts",
+      "status": "AVAILABLE",
+      "canonicalInterfaces": [
+        "POST /api/v1/providers/{id}/blockouts",
+        "GET /api/v1/providers/{id}/blockouts",
+        "DELETE /api/v1/providers/{id}/blockouts/{block}"
+      ],
+      "note": "Explicit blockouts participate in shared conflict constraints."
+    },
+    {
+      "legacyPath": "/delete_coach_lesson_product",
+      "domain": "Service catalogue",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/services",
+        "POST /api/v1/services",
+        "PUT /api/v1/providers/{id}/services",
+        "GET /api/v1/sessions"
+      ],
+      "note": "Service durations/policies and provider assignment work; prices, predefined-product attributes and catalogue edit/archive remain planned."
+    },
+    {
+      "legacyPath": "/getcoachdetailsbyid",
+      "domain": "Provider catalogue",
+      "status": "AVAILABLE",
+      "canonicalInterfaces": [
+        "GET /api/v1/providers"
+      ],
+      "note": "Providers are tenant-scoped; detailed legacy provider response fields are not reproduced."
+    },
+    {
+      "legacyPath": "/cancelappointment",
+      "domain": "Booking lifecycle",
+      "status": "AVAILABLE",
+      "canonicalInterfaces": [
+        "POST /api/v1/bookings/{id}/cancel"
+      ],
+      "note": "Cancellation deadline is enforced; payment refund side effects are not implemented."
+    },
+    {
+      "legacyPath": "/cancelappointment2",
+      "domain": "Booking lifecycle",
+      "status": "AVAILABLE",
+      "canonicalInterfaces": [
+        "POST /api/v1/bookings/{id}/cancel"
+      ],
+      "note": "Cancellation deadline is enforced; payment refund side effects are not implemented."
+    },
+    {
+      "legacyPath": "/reschedule_appointment",
+      "domain": "Booking lifecycle",
+      "status": "AVAILABLE",
+      "canonicalInterfaces": [
+        "POST /api/v1/bookings/{id}/reschedule"
+      ],
+      "note": "Atomic, idempotent private rescheduling; group enrolments use cancellation and re-enrolment."
+    },
+    {
+      "legacyPath": "/delete_appointments_by_author",
+      "domain": "Attendance and retention",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Attendance/completion and destructive bulk deletion require separate lifecycle/retention contracts."
+    },
+    {
+      "legacyPath": "/update_all_lessons_interval_time",
+      "domain": "Service catalogue",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/services",
+        "POST /api/v1/services",
+        "PUT /api/v1/providers/{id}/services",
+        "GET /api/v1/sessions"
+      ],
+      "note": "Service durations/policies and provider assignment work; prices, predefined-product attributes and catalogue edit/archive remain planned."
+    },
+    {
+      "legacyPath": "/automarkedlesson",
+      "domain": "Attendance and retention",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Attendance/completion and destructive bulk deletion require separate lifecycle/retention contracts."
+    },
+    {
+      "legacyPath": "/savemulticartmodalsettings",
+      "domain": "Cart and checkout",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/bookings/batch",
+        "POST /api/v1/sessions/{id}/enrolments"
+      ],
+      "note": "Atomic private batches and group enrolment work; persisted carts, checkout, payment holds and semi-private pricing do not."
+    },
+    {
+      "legacyPath": "/getStudentsofInstructor",
+      "domain": "Identity and profiles",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/me/profile",
+        "PUT /api/v1/me/profile",
+        "GET /api/v1/users",
+        "GET /api/v1/users/{id}"
+      ],
+      "note": "Own profile and admin user listing work; location membership/coach relationships require additional contracts."
+    },
+    {
+      "legacyPath": "/sendmultilesson_booking_notification",
+      "domain": "Notifications",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/notifications",
+        "POST /api/v1/notifications/{id}/read"
+      ],
+      "note": "In-app booking notifications work; SMS/email/push delivery and preference areas are not implemented."
+    },
+    {
+      "legacyPath": "/addsemilessonstocart",
+      "domain": "Cart and checkout",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/bookings/batch",
+        "POST /api/v1/sessions/{id}/enrolments"
+      ],
+      "note": "Atomic private batches and group enrolment work; persisted carts, checkout, payment holds and semi-private pricing do not."
+    },
+    {
+      "legacyPath": "/deletesemilessonstocart",
+      "domain": "Cart and checkout",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/bookings/batch",
+        "POST /api/v1/sessions/{id}/enrolments"
+      ],
+      "note": "Atomic private batches and group enrolment work; persisted carts, checkout, payment holds and semi-private pricing do not."
+    },
+    {
+      "legacyPath": "/payment",
+      "domain": "Payments, orders and payouts",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "No live payment adapter, order lifecycle or payout API is exposed."
+    },
+    {
+      "legacyPath": "/getcoachwalletamount",
+      "domain": "Wallets and credits",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "An immutable ledger and reconciliation contract are required."
+    },
+    {
+      "legacyPath": "/updatecoachwalletamount",
+      "domain": "Wallets and credits",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "An immutable ledger and reconciliation contract are required."
+    },
+    {
+      "legacyPath": "/getCoachWalletTransactions",
+      "domain": "Wallets and credits",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "An immutable ledger and reconciliation contract are required."
+    },
+    {
+      "legacyPath": "/getCoachWalletTransactionspaging",
+      "domain": "Wallets and credits",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "An immutable ledger and reconciliation contract are required."
+    },
+    {
+      "legacyPath": "/getLocationCredits",
+      "domain": "Wallets and credits",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "An immutable ledger and reconciliation contract are required."
+    },
+    {
+      "legacyPath": "/payment-sheet",
+      "domain": "Payments, orders and payouts",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "No live payment adapter, order lifecycle or payout API is exposed."
+    },
+    {
+      "legacyPath": "/pay-from-saved-card",
+      "domain": "Payments, orders and payouts",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Payment method charging and connected-account balances need a provider adapter and reconciliation contract."
+    },
+    {
+      "legacyPath": "/retrive-stripe-customer-by-userid",
+      "domain": "Payments, orders and payouts",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "No live payment adapter, order lifecycle or payout API is exposed."
+    },
+    {
+      "legacyPath": "/update-default-stripe-card",
+      "domain": "Payments, orders and payouts",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "No live payment adapter, order lifecycle or payout API is exposed."
+    },
+    {
+      "legacyPath": "/delete-stripe-card",
+      "domain": "Payments, orders and payouts",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "No live payment adapter, order lifecycle or payout API is exposed."
+    },
+    {
+      "legacyPath": "/edit-stripe-card",
+      "domain": "Payments, orders and payouts",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "No live payment adapter, order lifecycle or payout API is exposed."
+    },
+    {
+      "legacyPath": "/create_stripe_card",
+      "domain": "Payments, orders and payouts",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "No live payment adapter, order lifecycle or payout API is exposed."
+    },
+    {
+      "legacyPath": "/resendinvoice",
+      "domain": "Payments, orders and payouts",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "No live payment adapter, order lifecycle or payout API is exposed."
+    },
+    {
+      "legacyPath": "/insert_new_subcategory",
+      "domain": "Categories, tags and custom fields",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Custom taxonomy, filtering and tag management are not implemented."
+    },
+    {
+      "legacyPath": "/update_customer_cart_itemdata",
+      "domain": "Cart and checkout",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/bookings/batch",
+        "POST /api/v1/sessions/{id}/enrolments"
+      ],
+      "note": "Atomic private batches and group enrolment work; persisted carts, checkout, payment holds and semi-private pricing do not."
+    },
+    {
+      "legacyPath": "/update_customer_cart_itemdata_notes",
+      "domain": "Cart and checkout",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/bookings/batch",
+        "POST /api/v1/sessions/{id}/enrolments"
+      ],
+      "note": "Atomic private batches and group enrolment work; persisted carts, checkout, payment holds and semi-private pricing do not."
+    },
+    {
+      "legacyPath": "/createstripeconnectedaccountforcoach",
+      "domain": "Payments, orders and payouts",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "No live payment adapter, order lifecycle or payout API is exposed."
+    },
+    {
+      "legacyPath": "/retrievestripeconnectedaccountforcoach",
+      "domain": "Payments, orders and payouts",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "No live payment adapter, order lifecycle or payout API is exposed."
+    },
+    {
+      "legacyPath": "/loginforstripeconnectedaccountforcoach",
+      "domain": "Payments, orders and payouts",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "No live payment adapter, order lifecycle or payout API is exposed."
+    },
+    {
+      "legacyPath": "/getcoachstripefeesettings",
+      "domain": "Business fees and payment policies",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Booking notice/horizon settings exist; monetary fee and cash/hybrid policies do not."
+    },
+    {
+      "legacyPath": "/get_onboarding_process_checks",
+      "domain": "Application configuration",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/business/settings",
+        "PUT /api/v1/business/settings",
+        "GET /api/v1/capabilities"
+      ],
+      "note": "Booking policies and capabilities work; application versioning, arbitrary fields and onboarding screens remain planned."
+    },
+    {
+      "legacyPath": "/update_coach_lesson_settings",
+      "domain": "Service catalogue",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/services",
+        "POST /api/v1/services",
+        "PUT /api/v1/providers/{id}/services",
+        "GET /api/v1/sessions"
+      ],
+      "note": "Service durations/policies and provider assignment work; prices, predefined-product attributes and catalogue edit/archive remain planned."
+    },
+    {
+      "legacyPath": "/profile_image",
+      "domain": "Files, waivers and signatures",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Private file storage, consent, signed access and retention need a separate module."
+    },
+    {
+      "legacyPath": "/get_all_managedstudent",
+      "domain": "Guardians and managed students",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "GUARDIAN accounts can be invited; dependent identities and booking on behalf of students are not implemented."
+    },
+    {
+      "legacyPath": "/checkonlyphonexist",
+      "domain": "Phone verification",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "No phone lookup, OTP delivery or OTP verification is exposed."
+    },
+    {
+      "legacyPath": "/create_managed_student",
+      "domain": "Guardians and managed students",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "GUARDIAN accounts can be invited; dependent identities and booking on behalf of students are not implemented."
+    },
+    {
+      "legacyPath": "/create_adultmanaged_student",
+      "domain": "Guardians and managed students",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "GUARDIAN accounts can be invited; dependent identities and booking on behalf of students are not implemented."
+    },
+    {
+      "legacyPath": "/resend_mstinfo",
+      "domain": "Guardians and managed students",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "GUARDIAN accounts can be invited; dependent identities and booking on behalf of students are not implemented."
+    },
+    {
+      "legacyPath": "/update_mstdetails",
+      "domain": "Guardians and managed students",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "GUARDIAN accounts can be invited; dependent identities and booking on behalf of students are not implemented."
+    },
+    {
+      "legacyPath": "/removeManagedStudentLogin",
+      "domain": "Guardians and managed students",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "GUARDIAN accounts can be invited; dependent identities and booking on behalf of students are not implemented."
+    },
+    {
+      "legacyPath": "/sendnotification_instructorbooking",
+      "domain": "Notifications",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/notifications",
+        "POST /api/v1/notifications/{id}/read"
+      ],
+      "note": "In-app booking notifications work; SMS/email/push delivery and preference areas are not implemented."
+    },
+    {
+      "legacyPath": "/book_lesson_all_coach_data",
+      "domain": "Booking discovery and lifecycle",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/bookings",
+        "GET /api/v1/bookings/{id}",
+        "POST /api/v1/bookings",
+        "POST /api/v1/bookings/batch"
+      ],
+      "note": "Tenant/customer/provider scoped lists and booking creation work; specialised history filters and legacy payload compatibility are not implemented."
+    },
+    {
+      "legacyPath": "/updateExpoPushTokens",
+      "domain": "Notifications",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/notifications",
+        "POST /api/v1/notifications/{id}/read"
+      ],
+      "note": "In-app booking notifications work; SMS/email/push delivery and preference areas are not implemented."
+    },
+    {
+      "legacyPath": "/deleteManagedstudent",
+      "domain": "Guardians and managed students",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "GUARDIAN accounts can be invited; dependent identities and booking on behalf of students are not implemented."
+    },
+    {
+      "legacyPath": "/accountdeletionsubmit",
+      "domain": "Account and membership lifecycle",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Account deletion, membership removal and retention rules are not implemented."
+    },
+    {
+      "legacyPath": "/remove_profile_image",
+      "domain": "Files, waivers and signatures",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Private file storage, consent, signed access and retention need a separate module."
+    },
+    {
+      "legacyPath": "/coachscheduledlessons_repeated",
+      "domain": "Recurring schedules",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/session-series"
+      ],
+      "note": "Weekly group-session series work; recurring availability, blockout series and legacy edit/split rules remain planned."
+    },
+    {
+      "legacyPath": "/create_coach_schedule_repeated",
+      "domain": "Recurring schedules",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/session-series"
+      ],
+      "note": "Weekly group-session series work; recurring availability, blockout series and legacy edit/split rules remain planned."
+    },
+    {
+      "legacyPath": "/edit_coach_schedule_repeated",
+      "domain": "Recurring schedules",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/session-series"
+      ],
+      "note": "Weekly group-session series work; recurring availability, blockout series and legacy edit/split rules remain planned."
+    },
+    {
+      "legacyPath": "/GetAppointmentDatesForCoach_1151",
+      "domain": "Availability and sessions",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/providers/{id}/slots",
+        "GET /api/v1/providers/{id}/availability",
+        "POST /api/v1/providers/{id}/availability",
+        "DELETE /api/v1/providers/{id}/availability/{window}",
+        "POST /api/v1/sessions",
+        "POST /api/v1/session-series"
+      ],
+      "note": "Explicit windows, slots and scheduled group sessions work; recurring local working hours and legacy schedule editing do not."
+    },
+    {
+      "legacyPath": "/get_coachavailability_portal",
+      "domain": "Availability and sessions",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/providers/{id}/slots",
+        "GET /api/v1/providers/{id}/availability",
+        "POST /api/v1/providers/{id}/availability",
+        "DELETE /api/v1/providers/{id}/availability/{window}",
+        "POST /api/v1/sessions",
+        "POST /api/v1/session-series"
+      ],
+      "note": "Explicit windows, slots and scheduled group sessions work; recurring local working hours and legacy schedule editing do not."
+    },
+    {
+      "legacyPath": "/get_coach_lessons_portal",
+      "domain": "Booking discovery and lifecycle",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/bookings",
+        "GET /api/v1/sessions"
+      ],
+      "note": "Provider-scoped bookings and tenant sessions work; the legacy portal response contract is unknown."
+    },
+    {
+      "legacyPath": "/get_appointment_contact_portal",
+      "domain": "Contacts and relationships",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Appointment contact visibility and response fields need a dedicated contract."
+    },
+    {
+      "legacyPath": "/get_coach_time_slot_by_date_1151",
+      "domain": "Availability and sessions",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/providers/{id}/slots",
+        "GET /api/v1/providers/{id}/availability",
+        "POST /api/v1/providers/{id}/availability",
+        "DELETE /api/v1/providers/{id}/availability/{window}",
+        "POST /api/v1/sessions",
+        "POST /api/v1/session-series"
+      ],
+      "note": "Explicit windows, slots and scheduled group sessions work; recurring local working hours and legacy schedule editing do not."
+    },
+    {
+      "legacyPath": "/get_coach_time_slot_by_date_1151_test",
+      "domain": "Availability and sessions",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/providers/{id}/slots",
+        "GET /api/v1/providers/{id}/availability",
+        "POST /api/v1/providers/{id}/availability",
+        "DELETE /api/v1/providers/{id}/availability/{window}",
+        "POST /api/v1/sessions",
+        "POST /api/v1/session-series"
+      ],
+      "note": "Explicit windows, slots and scheduled group sessions work; recurring local working hours and legacy schedule editing do not."
+    },
+    {
+      "legacyPath": "/book_lesson_all_coach_data_1151",
+      "domain": "Booking discovery and lifecycle",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/bookings",
+        "GET /api/v1/bookings/{id}",
+        "POST /api/v1/bookings",
+        "POST /api/v1/bookings/batch"
+      ],
+      "note": "Tenant/customer/provider scoped lists and booking creation work; specialised history filters and legacy payload compatibility are not implemented."
+    },
+    {
+      "legacyPath": "/coach_blockedschedules_repeated",
+      "domain": "Recurring schedules",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/session-series"
+      ],
+      "note": "Weekly group-session series work; recurring availability, blockout series and legacy edit/split rules remain planned."
+    },
+    {
+      "legacyPath": "/create_coach_scheduleblock_repeated",
+      "domain": "Recurring schedules",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/session-series"
+      ],
+      "note": "Weekly group-session series work; recurring availability, blockout series and legacy edit/split rules remain planned."
+    },
+    {
+      "legacyPath": "/edit_coachscheduleblock_repeated",
+      "domain": "Recurring schedules",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/session-series"
+      ],
+      "note": "Weekly group-session series work; recurring availability, blockout series and legacy edit/split rules remain planned."
+    },
+    {
+      "legacyPath": "/getcoachesdata",
+      "domain": "Provider catalogue",
+      "status": "AVAILABLE",
+      "canonicalInterfaces": [
+        "GET /api/v1/providers"
+      ],
+      "note": "Providers are tenant-scoped; detailed legacy provider response fields are not reproduced."
+    },
+    {
+      "legacyPath": "/connectlinkwithins",
+      "domain": "Invitations and relationships",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/invitations",
+        "GET /api/v1/invitations",
+        "POST /api/v1/invitations/{id}/revoke",
+        "POST /api/v1/auth/invitations/accept"
+      ],
+      "note": "Administrative account invitations work; coach/student relationship requests, approvals and link workflows remain planned."
+    },
+    {
+      "legacyPath": "/dashboard_loginforportal",
+      "domain": "Authentication",
+      "status": "AVAILABLE",
+      "canonicalInterfaces": [
+        "POST /api/v1/auth/token",
+        "POST /api/v1/auth/login",
+        "POST /api/v1/auth/logout"
+      ],
+      "note": "Canonical authentication uses credential POSTs; legacy GET login routes are not registered."
+    },
+    {
+      "legacyPath": "/dashboard_logoutforportal",
+      "domain": "Authentication",
+      "status": "AVAILABLE",
+      "canonicalInterfaces": [
+        "POST /api/v1/auth/token",
+        "POST /api/v1/auth/login",
+        "POST /api/v1/auth/logout"
+      ],
+      "note": "Canonical authentication uses credential POSTs; legacy GET login routes are not registered."
+    },
+    {
+      "legacyPath": "/dashboard_data/(?P<user_id>\\d+)/(?P<locationid>\\d+)",
+      "domain": "Reporting and dashboards",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/booking-events"
+      ],
+      "note": "Audit events work; financial/attendance dashboards and date-based aggregate reporting do not."
+    },
+    {
+      "legacyPath": "/dashboard_data_opt/(?P<user_id>\\d+)/(?P<locationid>\\d+)",
+      "domain": "Reporting and dashboards",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/booking-events"
+      ],
+      "note": "Audit events work; financial/attendance dashboards and date-based aggregate reporting do not."
+    },
+    {
+      "legacyPath": "/get_reports/(?P<user_id>\\d+)/(?P<locationid>\\d+)/(?P<startdate>\\d+)/(?P<enddate>\\d+)",
+      "domain": "Reporting and dashboards",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/booking-events"
+      ],
+      "note": "Audit events work; financial/attendance dashboards and date-based aggregate reporting do not."
+    },
+    {
+      "legacyPath": "/get_reports2/(?P<user_id>\\d+)/(?P<locationid>\\d+)/(?P<startdate>\\d+)/(?P<enddate>\\d+)",
+      "domain": "Reporting and dashboards",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/booking-events"
+      ],
+      "note": "Audit events work; financial/attendance dashboards and date-based aggregate reporting do not."
+    },
+    {
+      "legacyPath": "/get_link_requests/(?P<userid>\\d+)/(?P<locationid>\\d+)",
+      "domain": "Invitations and relationships",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/invitations",
+        "GET /api/v1/invitations",
+        "POST /api/v1/invitations/{id}/revoke",
+        "POST /api/v1/auth/invitations/accept"
+      ],
+      "note": "Administrative account invitations work; coach/student relationship requests, approvals and link workflows remain planned."
+    },
+    {
+      "legacyPath": "/getCoachesByLocation/(?P<userid>\\d+)/(?P<locationid>\\d+)/(?P<showallloc>\\d+)",
+      "domain": "Locations and rooms",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/locations",
+        "GET /api/v1/locations",
+        "PUT /api/v1/locations/{id}",
+        "POST /api/v1/locations/{id}/rooms"
+      ],
+      "note": "Location/room creation and location edits work; portal membership, location deletion and company profile extensions remain planned."
+    },
+    {
+      "legacyPath": "/getCoachesByLocation/(?P<userid>\\d+)/(?P<locationid>\\d+)/(?P<showallloc>true|false)",
+      "domain": "Locations and rooms",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/locations",
+        "GET /api/v1/locations",
+        "PUT /api/v1/locations/{id}",
+        "POST /api/v1/locations/{id}/rooms"
+      ],
+      "note": "Location/room creation and location edits work; portal membership, location deletion and company profile extensions remain planned."
+    },
+    {
+      "legacyPath": "/get_appointment_dates_for_coach_for_dashboard/(?P<userid>\\d+)/(?P<locationid>\\d+)",
+      "domain": "Availability and sessions",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/providers/{id}/slots",
+        "GET /api/v1/providers/{id}/availability",
+        "POST /api/v1/providers/{id}/availability",
+        "DELETE /api/v1/providers/{id}/availability/{window}",
+        "POST /api/v1/sessions",
+        "POST /api/v1/session-series"
+      ],
+      "note": "Explicit windows, slots and scheduled group sessions work; recurring local working hours and legacy schedule editing do not."
+    },
+    {
+      "legacyPath": "/create_coach_invitation_from_dashboard",
+      "domain": "Invitations and relationships",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/invitations",
+        "GET /api/v1/invitations",
+        "POST /api/v1/invitations/{id}/revoke",
+        "POST /api/v1/auth/invitations/accept"
+      ],
+      "note": "Administrative account invitations work; coach/student relationship requests, approvals and link workflows remain planned."
+    },
+    {
+      "legacyPath": "/signup_dashboard",
+      "domain": "Account registration",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/auth/workspaces",
+        "POST /api/v1/auth/register",
+        "POST /api/v1/invitations",
+        "POST /api/v1/auth/invitations/accept"
+      ],
+      "note": "Workspace owners, customers and invited provider/guardian accounts work; specialised legacy onboarding is not reproduced."
+    },
+    {
+      "legacyPath": "/save_settings_company_info/(?P<userid>\\d+)",
+      "domain": "Locations and rooms",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/locations",
+        "GET /api/v1/locations",
+        "PUT /api/v1/locations/{id}",
+        "POST /api/v1/locations/{id}/rooms"
+      ],
+      "note": "Location/room creation and location edits work; portal membership, location deletion and company profile extensions remain planned."
+    },
+    {
+      "legacyPath": "/save_settings_location_info/(?P<userid>\\d+)",
+      "domain": "Locations and rooms",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/locations",
+        "GET /api/v1/locations",
+        "PUT /api/v1/locations/{id}",
+        "POST /api/v1/locations/{id}/rooms"
+      ],
+      "note": "Location/room creation and location edits work; portal membership, location deletion and company profile extensions remain planned."
+    },
+    {
+      "legacyPath": "/update_settings_location_info/(?P<userid>\\d+)",
+      "domain": "Locations and rooms",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/locations",
+        "GET /api/v1/locations",
+        "PUT /api/v1/locations/{id}",
+        "POST /api/v1/locations/{id}/rooms"
+      ],
+      "note": "Location/room creation and location edits work; portal membership, location deletion and company profile extensions remain planned."
+    },
+    {
+      "legacyPath": "/update_settings_location_info2/(?P<userid>\\d+)",
+      "domain": "Locations and rooms",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/locations",
+        "GET /api/v1/locations",
+        "PUT /api/v1/locations/{id}",
+        "POST /api/v1/locations/{id}/rooms"
+      ],
+      "note": "Location/room creation and location edits work; portal membership, location deletion and company profile extensions remain planned."
+    },
+    {
+      "legacyPath": "/update_location_time/(?P<userid>\\d+)/(?P<locationid>\\d+)",
+      "domain": "Locations and rooms",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/locations",
+        "GET /api/v1/locations",
+        "PUT /api/v1/locations/{id}",
+        "POST /api/v1/locations/{id}/rooms"
+      ],
+      "note": "Location/room creation and location edits work; portal membership, location deletion and company profile extensions remain planned."
+    },
+    {
+      "legacyPath": "/delete_settings_location_info/(?P<userid>\\d+)/(?P<locationid>\\d+)",
+      "domain": "Locations and rooms",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/locations",
+        "GET /api/v1/locations",
+        "PUT /api/v1/locations/{id}",
+        "POST /api/v1/locations/{id}/rooms"
+      ],
+      "note": "Location/room creation and location edits work; portal membership, location deletion and company profile extensions remain planned."
+    },
+    {
+      "legacyPath": "/retrieveStripeConnectedAccountForlocation/(?P<Accid>\\d+)",
+      "domain": "Payments, orders and payouts",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "No live payment adapter, order lifecycle or payout API is exposed."
+    },
+    {
+      "legacyPath": "/loginForStripeConnectedAccountForlocation/(?P<Accid>\\d+)",
+      "domain": "Payments, orders and payouts",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "No live payment adapter, order lifecycle or payout API is exposed."
+    },
+    {
+      "legacyPath": "/matchLocation",
+      "domain": "Locations and rooms",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/locations",
+        "GET /api/v1/locations",
+        "PUT /api/v1/locations/{id}",
+        "POST /api/v1/locations/{id}/rooms"
+      ],
+      "note": "Location/room creation and location edits work; portal membership, location deletion and company profile extensions remain planned."
+    },
+    {
+      "legacyPath": "/getportallocationlist",
+      "domain": "Locations and rooms",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/locations",
+        "GET /api/v1/locations",
+        "PUT /api/v1/locations/{id}",
+        "POST /api/v1/locations/{id}/rooms"
+      ],
+      "note": "Location/room creation and location edits work; portal membership, location deletion and company profile extensions remain planned."
+    },
+    {
+      "legacyPath": "/approveinvitationbygym/(?P<invite_id>\\d+)/(?P<authorid>\\d+)",
+      "domain": "Invitations and relationships",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/invitations",
+        "GET /api/v1/invitations",
+        "POST /api/v1/invitations/{id}/revoke",
+        "POST /api/v1/auth/invitations/accept"
+      ],
+      "note": "Administrative account invitations work; coach/student relationship requests, approvals and link workflows remain planned."
+    },
+    {
+      "legacyPath": "/retriveconnectbalance",
+      "domain": "Payments, orders and payouts",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Payment method charging and connected-account balances need a provider adapter and reconciliation contract."
+    },
+    {
+      "legacyPath": "/changepaymentscheduleofcoachonstripe",
+      "domain": "Payments, orders and payouts",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "No live payment adapter, order lifecycle or payout API is exposed."
+    },
+    {
+      "legacyPath": "/updateStripePayoutScheduleforlocation",
+      "domain": "Payments, orders and payouts",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "No live payment adapter, order lifecycle or payout API is exposed."
+    },
+    {
+      "legacyPath": "/request_password_reset_forportal",
+      "domain": "Password recovery",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Self-service password changes exist; email/OTP recovery and delivery are not implemented."
+    },
+    {
+      "legacyPath": "/validate_password_reset_forportal",
+      "domain": "Password recovery",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Self-service password changes exist; email/OTP recovery and delivery are not implemented."
+    },
+    {
+      "legacyPath": "/reset_password_forportal",
+      "domain": "Password recovery",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Self-service password changes exist; email/OTP recovery and delivery are not implemented."
+    },
+    {
+      "legacyPath": "/forgot_password_forportal",
+      "domain": "Password recovery",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Self-service password changes exist; email/OTP recovery and delivery are not implemented."
+    },
+    {
+      "legacyPath": "/instant_payout",
+      "domain": "Payments, orders and payouts",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "No live payment adapter, order lifecycle or payout API is exposed."
+    },
+    {
+      "legacyPath": "/getUsersByLocation",
+      "domain": "Identity and profiles",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/me/profile",
+        "PUT /api/v1/me/profile",
+        "GET /api/v1/users",
+        "GET /api/v1/users/{id}"
+      ],
+      "note": "Own profile and admin user listing work; location membership/coach relationships require additional contracts."
+    },
+    {
+      "legacyPath": "/updateGlobalLocationFeeSettings/(?P<userid>\\d+)",
+      "domain": "Business fees and payment policies",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Booking notice/horizon settings exist; monetary fee and cash/hybrid policies do not."
+    },
+    {
+      "legacyPath": "/updateGlobalCommissionFeeSettings/(?P<userid>\\d+)",
+      "domain": "Business fees and payment policies",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Booking notice/horizon settings exist; monetary fee and cash/hybrid policies do not."
+    },
+    {
+      "legacyPath": "/updateGlobalCashPaySettings/(?P<userid>\\d+)",
+      "domain": "Business fees and payment policies",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Booking notice/horizon settings exist; monetary fee and cash/hybrid policies do not."
+    },
+    {
+      "legacyPath": "/updateGlobalHybridCashPaySettings/(?P<userid>\\d+)",
+      "domain": "Business fees and payment policies",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Booking notice/horizon settings exist; monetary fee and cash/hybrid policies do not."
+    },
+    {
+      "legacyPath": "/updateGlobalComplimentaryCashPaySettings/(?P<userid>\\d+)",
+      "domain": "Business fees and payment policies",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Booking notice/horizon settings exist; monetary fee and cash/hybrid policies do not."
+    },
+    {
+      "legacyPath": "/updateindividualLocationFeeSettings/(?P<userid>\\d+)",
+      "domain": "Business fees and payment policies",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Booking notice/horizon settings exist; monetary fee and cash/hybrid policies do not."
+    },
+    {
+      "legacyPath": "/updateindividualCommissionFeeSettings/(?P<userid>\\d+)",
+      "domain": "Business fees and payment policies",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Booking notice/horizon settings exist; monetary fee and cash/hybrid policies do not."
+    },
+    {
+      "legacyPath": "/updateindividualCashPaySettings/(?P<userid>\\d+)",
+      "domain": "Business fees and payment policies",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Booking notice/horizon settings exist; monetary fee and cash/hybrid policies do not."
+    },
+    {
+      "legacyPath": "/updateindividualHybridCashPaySettings/(?P<userid>\\d+)",
+      "domain": "Business fees and payment policies",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Booking notice/horizon settings exist; monetary fee and cash/hybrid policies do not."
+    },
+    {
+      "legacyPath": "/updateindividualblockInstructor4Location/(?P<userid>\\d+)",
+      "domain": "Business fees and payment policies",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Booking notice/horizon settings exist; monetary fee and cash/hybrid policies do not."
+    },
+    {
+      "legacyPath": "/updateindividualComplimentaryCashPaySettings/(?P<userid>\\d+)",
+      "domain": "Business fees and payment policies",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Booking notice/horizon settings exist; monetary fee and cash/hybrid policies do not."
+    },
+    {
+      "legacyPath": "/savenewuserfromlocationdashboard/(?P<userid>\\d+)",
+      "domain": "Account registration",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/auth/workspaces",
+        "POST /api/v1/auth/register",
+        "POST /api/v1/invitations",
+        "POST /api/v1/auth/invitations/accept"
+      ],
+      "note": "Workspace owners, customers and invited provider/guardian accounts work; specialised legacy onboarding is not reproduced."
+    },
+    {
+      "legacyPath": "/updateordeleteuserfromlocationdashboard/(?P<userid>\\d+)",
+      "domain": "Account and membership lifecycle",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Account deletion, membership removal and retention rules are not implemented."
+    },
+    {
+      "legacyPath": "/getnewuserforlocationdashboard/(?P<business_id>\\d+)",
+      "domain": "Identity and profiles",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/me/profile",
+        "PUT /api/v1/me/profile",
+        "GET /api/v1/users",
+        "GET /api/v1/users/{id}"
+      ],
+      "note": "Own profile and admin user listing work; location membership/coach relationships require additional contracts."
+    },
+    {
+      "legacyPath": "/getinvitation2",
+      "domain": "Invitations and relationships",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/invitations",
+        "GET /api/v1/invitations",
+        "POST /api/v1/invitations/{id}/revoke",
+        "POST /api/v1/auth/invitations/accept"
+      ],
+      "note": "Administrative account invitations work; coach/student relationship requests, approvals and link workflows remain planned."
+    },
+    {
+      "legacyPath": "/approveinvitation2",
+      "domain": "Invitations and relationships",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/invitations",
+        "GET /api/v1/invitations",
+        "POST /api/v1/invitations/{id}/revoke",
+        "POST /api/v1/auth/invitations/accept"
+      ],
+      "note": "Administrative account invitations work; coach/student relationship requests, approvals and link workflows remain planned."
+    },
+    {
+      "legacyPath": "/addlessonplan",
+      "domain": "Lesson plans and progress",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Curriculum, assignments, skills and progress reports require their own domain contracts."
+    },
+    {
+      "legacyPath": "/getlessonplans",
+      "domain": "Lesson plans and progress",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Curriculum, assignments, skills and progress reports require their own domain contracts."
+    },
+    {
+      "legacyPath": "/getlessonplandetail",
+      "domain": "Lesson plans and progress",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Curriculum, assignments, skills and progress reports require their own domain contracts."
+    },
+    {
+      "legacyPath": "/editlessonplan",
+      "domain": "Lesson plans and progress",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Curriculum, assignments, skills and progress reports require their own domain contracts."
+    },
+    {
+      "legacyPath": "/updatestatuslessonplan",
+      "domain": "Lesson plans and progress",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Curriculum, assignments, skills and progress reports require their own domain contracts."
+    },
+    {
+      "legacyPath": "/getskillsofcoachstudent",
+      "domain": "Lesson plans and progress",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Curriculum, assignments, skills and progress reports require their own domain contracts."
+    },
+    {
+      "legacyPath": "/deletelessonplan",
+      "domain": "Lesson plans and progress",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Curriculum, assignments, skills and progress reports require their own domain contracts."
+    },
+    {
+      "legacyPath": "/getlessonplans_bycoach",
+      "domain": "Lesson plans and progress",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Curriculum, assignments, skills and progress reports require their own domain contracts."
+    },
+    {
+      "legacyPath": "/getlessonplans_forcoach",
+      "domain": "Lesson plans and progress",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Curriculum, assignments, skills and progress reports require their own domain contracts."
+    },
+    {
+      "legacyPath": "/add_lesson_category",
+      "domain": "Lesson plans and progress",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Curriculum, assignments, skills and progress reports require their own domain contracts."
+    },
+    {
+      "legacyPath": "/edit_lessonplan_category",
+      "domain": "Lesson plans and progress",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Curriculum, assignments, skills and progress reports require their own domain contracts."
+    },
+    {
+      "legacyPath": "/delete_lessonplan_category",
+      "domain": "Lesson plans and progress",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Curriculum, assignments, skills and progress reports require their own domain contracts."
+    },
+    {
+      "legacyPath": "/getlessoncategorylist",
+      "domain": "Lesson plans and progress",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Curriculum, assignments, skills and progress reports require their own domain contracts."
+    },
+    {
+      "legacyPath": "/assignlessontocoach",
+      "domain": "Lesson plans and progress",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Curriculum, assignments, skills and progress reports require their own domain contracts."
+    },
+    {
+      "legacyPath": "/assignlessontostudent",
+      "domain": "Lesson plans and progress",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Curriculum, assignments, skills and progress reports require their own domain contracts."
+    },
+    {
+      "legacyPath": "/getassignedlessonsofstudent",
+      "domain": "Lesson plans and progress",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Curriculum, assignments, skills and progress reports require their own domain contracts."
+    },
+    {
+      "legacyPath": "/addskillprogressforstudent",
+      "domain": "Lesson plans and progress",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Curriculum, assignments, skills and progress reports require their own domain contracts."
+    },
+    {
+      "legacyPath": "/completelesson",
+      "domain": "Lesson plans and progress",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Curriculum, assignments, skills and progress reports require their own domain contracts."
+    },
+    {
+      "legacyPath": "/getskillprofilestudent",
+      "domain": "Lesson plans and progress",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Curriculum, assignments, skills and progress reports require their own domain contracts."
+    },
+    {
+      "legacyPath": "/addprogressreportforskill",
+      "domain": "Lesson plans and progress",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Curriculum, assignments, skills and progress reports require their own domain contracts."
+    },
+    {
+      "legacyPath": "/editprogressreportforskill",
+      "domain": "Lesson plans and progress",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Curriculum, assignments, skills and progress reports require their own domain contracts."
+    },
+    {
+      "legacyPath": "/getprogressreportforskill",
+      "domain": "Lesson plans and progress",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Curriculum, assignments, skills and progress reports require their own domain contracts."
+    },
+    {
+      "legacyPath": "/addprogressreportgeneral",
+      "domain": "Lesson plans and progress",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Curriculum, assignments, skills and progress reports require their own domain contracts."
+    },
+    {
+      "legacyPath": "/editprogressreportgeneral",
+      "domain": "Lesson plans and progress",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Curriculum, assignments, skills and progress reports require their own domain contracts."
+    },
+    {
+      "legacyPath": "/updateprogressreportreadstatusgeneral",
+      "domain": "Lesson plans and progress",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Curriculum, assignments, skills and progress reports require their own domain contracts."
+    },
+    {
+      "legacyPath": "/getprogressreportgeneral",
+      "domain": "Lesson plans and progress",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Curriculum, assignments, skills and progress reports require their own domain contracts."
+    },
+    {
+      "legacyPath": "/getprogressreportforall",
+      "domain": "Lesson plans and progress",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Curriculum, assignments, skills and progress reports require their own domain contracts."
+    },
+    {
+      "legacyPath": "/getgeneralprreadstatuscount",
+      "domain": "Lesson plans and progress",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Curriculum, assignments, skills and progress reports require their own domain contracts."
+    },
+    {
+      "legacyPath": "/deleteprogressreportgeneral",
+      "domain": "Lesson plans and progress",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Curriculum, assignments, skills and progress reports require their own domain contracts."
+    },
+    {
+      "legacyPath": "/getassignedlessonsofstudentloggedin",
+      "domain": "Lesson plans and progress",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Curriculum, assignments, skills and progress reports require their own domain contracts."
+    },
+    {
+      "legacyPath": "/deleteassignedlessonsofstudent",
+      "domain": "Lesson plans and progress",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Curriculum, assignments, skills and progress reports require their own domain contracts."
+    },
+    {
+      "legacyPath": "/tipproduct",
+      "domain": "Gratuities",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Tip amounts, recipients and settlement need a monetary contract."
+    },
+    {
+      "legacyPath": "/tippricetocart",
+      "domain": "Gratuities",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Tip amounts, recipients and settlement need a monetary contract."
+    },
+    {
+      "legacyPath": "/getcoachtipssettings",
+      "domain": "Gratuities",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Tip amounts, recipients and settlement need a monetary contract."
+    },
+    {
+      "legacyPath": "/getnotificationarea",
+      "domain": "Notifications",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/notifications",
+        "POST /api/v1/notifications/{id}/read"
+      ],
+      "note": "In-app booking notifications work; SMS/email/push delivery and preference areas are not implemented."
+    },
+    {
+      "legacyPath": "/updatenotificationarea",
+      "domain": "Notifications",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/notifications",
+        "POST /api/v1/notifications/{id}/read"
+      ],
+      "note": "In-app booking notifications work; SMS/email/push delivery and preference areas are not implemented."
+    },
+    {
+      "legacyPath": "/stripe-pay-handler",
+      "domain": "Payments, orders and payouts",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "No live payment adapter, order lifecycle or payout API is exposed."
+    },
+    {
+      "legacyPath": "/stripe-account-updated",
+      "domain": "Payments, orders and payouts",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "No live payment adapter, order lifecycle or payout API is exposed."
+    },
+    {
+      "legacyPath": "/account_session",
+      "domain": "Payments, orders and payouts",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "No live payment adapter, order lifecycle or payout API is exposed."
+    },
+    {
+      "legacyPath": "/createstripeconnectedaccountforcoachportal",
+      "domain": "Payments, orders and payouts",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "No live payment adapter, order lifecycle or payout API is exposed."
+    },
+    {
+      "legacyPath": "/get_onboarding_process_checks_portal",
+      "domain": "Application configuration",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/business/settings",
+        "PUT /api/v1/business/settings",
+        "GET /api/v1/capabilities"
+      ],
+      "note": "Booking policies and capabilities work; application versioning, arbitrary fields and onboarding screens remain planned."
+    },
+    {
+      "legacyPath": "/saveprofileandsecurityinfo",
+      "domain": "Identity and profiles",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/me/profile",
+        "PUT /api/v1/me/profile",
+        "GET /api/v1/users",
+        "GET /api/v1/users/{id}"
+      ],
+      "note": "Own profile and admin user listing work; location membership/coach relationships require additional contracts."
+    },
+    {
+      "legacyPath": "/saveprofileandsecurityinfopw",
+      "domain": "Identity and profiles",
+      "status": "AVAILABLE",
+      "canonicalInterfaces": [
+        "POST /api/v1/me/password"
+      ],
+      "note": "Requires current password; revokes all sessions."
+    },
+    {
+      "legacyPath": "/updatepaymenttransferforsheet",
+      "domain": "Payments, orders and payouts",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "No live payment adapter, order lifecycle or payout API is exposed."
+    },
+    {
+      "legacyPath": "/upload_docs",
+      "domain": "Files, waivers and signatures",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Private file storage, consent, signed access and retention need a separate module."
+    },
+    {
+      "legacyPath": "/get_files_by_userid",
+      "domain": "Files, waivers and signatures",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Private file storage, consent, signed access and retention need a separate module."
+    },
+    {
+      "legacyPath": "/delete_files_by_userid",
+      "domain": "Files, waivers and signatures",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Private file storage, consent, signed access and retention need a separate module."
+    },
+    {
+      "legacyPath": "/servepdf",
+      "domain": "Files, waivers and signatures",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Private file storage, consent, signed access and retention need a separate module."
+    },
+    {
+      "legacyPath": "/getincartappointments",
+      "domain": "Cart and checkout",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/bookings/batch",
+        "POST /api/v1/sessions/{id}/enrolments"
+      ],
+      "note": "Atomic private batches and group enrolment work; persisted carts, checkout, payment holds and semi-private pricing do not."
+    },
+    {
+      "legacyPath": "/upload_signature_to_server",
+      "domain": "Files, waivers and signatures",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Private file storage, consent, signed access and retention need a separate module."
+    },
+    {
+      "legacyPath": "/delete_instructor_from_portal/(?P<locationid>\\d+)/(?P<userid>\\d+)",
+      "domain": "Account and membership lifecycle",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Account deletion, membership removal and retention rules are not implemented."
+    },
+    {
+      "legacyPath": "/delete_linkrequest_from_portal/(?P<locationid>\\d+)/(?P<userid>\\d+)",
+      "domain": "Invitations and relationships",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/invitations",
+        "GET /api/v1/invitations",
+        "POST /api/v1/invitations/{id}/revoke",
+        "POST /api/v1/auth/invitations/accept"
+      ],
+      "note": "Administrative account invitations work; coach/student relationship requests, approvals and link workflows remain planned."
+    },
+    {
+      "legacyPath": "/iapsubscriptionpurchased",
+      "domain": "Subscriptions and app-store billing",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Receipt verification, lifecycle reconciliation and entitlement contracts are not implemented."
+    },
+    {
+      "legacyPath": "/markcashorderaspaid",
+      "domain": "Payments, orders and payouts",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "No live payment adapter, order lifecycle or payout API is exposed."
+    },
+    {
+      "legacyPath": "/handleGooglePlayNotification",
+      "domain": "Subscriptions and app-store billing",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Receipt verification, lifecycle reconciliation and entitlement contracts are not implemented."
+    },
+    {
+      "legacyPath": "/checkandroidsubscriptionstatus",
+      "domain": "Subscriptions and app-store billing",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Receipt verification, lifecycle reconciliation and entitlement contracts are not implemented."
+    },
+    {
+      "legacyPath": "/checkIosSubscriptionStatus",
+      "domain": "Subscriptions and app-store billing",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Receipt verification, lifecycle reconciliation and entitlement contracts are not implemented."
+    },
+    {
+      "legacyPath": "/createPaymentIntent",
+      "domain": "Payments, orders and payouts",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "No live payment adapter, order lifecycle or payout API is exposed."
+    },
+    {
+      "legacyPath": "/checkstripesubscriptionstatus",
+      "domain": "Subscriptions and app-store billing",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Receipt verification, lifecycle reconciliation and entitlement contracts are not implemented."
+    },
+    {
+      "legacyPath": "/lessonlink-login",
+      "domain": "Authentication",
+      "status": "AVAILABLE",
+      "canonicalInterfaces": [
+        "POST /api/v1/auth/token",
+        "POST /api/v1/auth/login",
+        "POST /api/v1/auth/logout"
+      ],
+      "note": "Canonical authentication uses credential POSTs; legacy GET login routes are not registered."
+    },
+    {
+      "legacyPath": "/getlocationscreditbyuserid",
+      "domain": "Wallets and credits",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "An immutable ledger and reconciliation contract are required."
+    },
+    {
+      "legacyPath": "/getlocationscreditbylocid",
+      "domain": "Wallets and credits",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "An immutable ledger and reconciliation contract are required."
+    },
+    {
+      "legacyPath": "/getallfiltercategory",
+      "domain": "Categories, tags and custom fields",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Custom taxonomy, filtering and tag management are not implemented."
+    },
+    {
+      "legacyPath": "/getcoachfiltertaglist",
+      "domain": "Categories, tags and custom fields",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Custom taxonomy, filtering and tag management are not implemented."
+    },
+    {
+      "legacyPath": "/updatecoachfiltertag",
+      "domain": "Categories, tags and custom fields",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Custom taxonomy, filtering and tag management are not implemented."
+    },
+    {
+      "legacyPath": "/getpredefinedlessons",
+      "domain": "Service catalogue",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/services",
+        "POST /api/v1/services",
+        "PUT /api/v1/providers/{id}/services",
+        "GET /api/v1/sessions"
+      ],
+      "note": "Service durations/policies and provider assignment work; prices, predefined-product attributes and catalogue edit/archive remain planned."
+    },
+    {
+      "legacyPath": "/coach_availability_for_predefinedlesson",
+      "domain": "Availability and sessions",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/providers/{id}/slots",
+        "GET /api/v1/providers/{id}/availability",
+        "POST /api/v1/providers/{id}/availability",
+        "DELETE /api/v1/providers/{id}/availability/{window}",
+        "POST /api/v1/sessions",
+        "POST /api/v1/session-series"
+      ],
+      "note": "Explicit windows, slots and scheduled group sessions work; recurring local working hours and legacy schedule editing do not."
+    },
+    {
+      "legacyPath": "/get_all_lessonsandrates",
+      "domain": "Service catalogue",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/services",
+        "POST /api/v1/services",
+        "PUT /api/v1/providers/{id}/services",
+        "GET /api/v1/sessions"
+      ],
+      "note": "Service durations/policies and provider assignment work; prices, predefined-product attributes and catalogue edit/archive remain planned."
+    },
+    {
+      "legacyPath": "/add_coach_definedlesson_product",
+      "domain": "Service catalogue",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/services",
+        "POST /api/v1/services",
+        "PUT /api/v1/providers/{id}/services",
+        "GET /api/v1/sessions"
+      ],
+      "note": "Service durations/policies and provider assignment work; prices, predefined-product attributes and catalogue edit/archive remain planned."
+    },
+    {
+      "legacyPath": "/edit_coach_definedlesson_product",
+      "domain": "Service catalogue",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/services",
+        "POST /api/v1/services",
+        "PUT /api/v1/providers/{id}/services",
+        "GET /api/v1/sessions"
+      ],
+      "note": "Service durations/policies and provider assignment work; prices, predefined-product attributes and catalogue edit/archive remain planned."
+    },
+    {
+      "legacyPath": "/get_coach_definedlesson_availabilities_1151",
+      "domain": "Service catalogue",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/services",
+        "POST /api/v1/services",
+        "PUT /api/v1/providers/{id}/services",
+        "GET /api/v1/sessions"
+      ],
+      "note": "Service durations/policies and provider assignment work; prices, predefined-product attributes and catalogue edit/archive remain planned."
+    },
+    {
+      "legacyPath": "/add_lesson_room",
+      "domain": "Locations and rooms",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/locations/{id}/rooms",
+        "GET /api/v1/locations/{id}/rooms"
+      ],
+      "note": "Rooms can be created/listed and reserved; room edit/archive/deletion is not implemented."
+    },
+    {
+      "legacyPath": "/edit_lesson_room",
+      "domain": "Locations and rooms",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/locations/{id}/rooms",
+        "GET /api/v1/locations/{id}/rooms"
+      ],
+      "note": "Rooms can be created/listed and reserved; room edit/archive/deletion is not implemented."
+    },
+    {
+      "legacyPath": "/delete_lesson_room",
+      "domain": "Locations and rooms",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/locations/{id}/rooms",
+        "GET /api/v1/locations/{id}/rooms"
+      ],
+      "note": "Rooms can be created/listed and reserved; room edit/archive/deletion is not implemented."
+    },
+    {
+      "legacyPath": "/get-ordersdetails",
+      "domain": "Payments, orders and payouts",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "No live payment adapter, order lifecycle or payout API is exposed."
+    },
+    {
+      "legacyPath": "/get-ordersdetails_coach",
+      "domain": "Payments, orders and payouts",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "No live payment adapter, order lifecycle or payout API is exposed."
+    },
+    {
+      "legacyPath": "/get_associateduserinfo",
+      "domain": "Identity and profiles",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "GET /api/v1/me/profile",
+        "PUT /api/v1/me/profile",
+        "GET /api/v1/users",
+        "GET /api/v1/users/{id}"
+      ],
+      "note": "Own profile and admin user listing work; location membership/coach relationships require additional contracts."
+    },
+    {
+      "legacyPath": "/connection_respond",
+      "domain": "Invitations and relationships",
+      "status": "PARTIAL",
+      "canonicalInterfaces": [
+        "POST /api/v1/invitations",
+        "GET /api/v1/invitations",
+        "POST /api/v1/invitations/{id}/revoke",
+        "POST /api/v1/auth/invitations/accept"
+      ],
+      "note": "Administrative account invitations work; coach/student relationship requests, approvals and link workflows remain planned."
+    },
+    {
+      "legacyPath": "/getgymfeesettings/(?P<business_id>\\d+)",
+      "domain": "Business fees and payment policies",
+      "status": "PLANNED",
+      "canonicalInterfaces": [],
+      "note": "Booking notice/horizon settings exist; monetary fee and cash/hybrid policies do not."
+    }
+  ]
+}

@@ -59,6 +59,13 @@ public class SessionService {
   public UUID register(RegisterRequest r) {
     var password = encode(r.password());
     var tenant = tenant(r.tenantSlug());
+    boolean signup =
+        db.sql("SELECT customer_signup_enabled FROM tenant_settings WHERE tenant_id=:tenant")
+            .param("tenant", tenant)
+            .query(Boolean.class)
+            .optional()
+            .orElse(true);
+    if (!signup) throw ApiFailure.forbidden();
     var id = UUID.randomUUID();
     insertUser(id, tenant, r.email(), password, "CUSTOMER");
     return id;

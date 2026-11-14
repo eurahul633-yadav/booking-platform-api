@@ -1,43 +1,48 @@
-# Validation — 14 November 2026
+# Validation — 0.2.0 development preview
 
-This records observed checks for the initial booking core; it is not a production certification or performance benchmark.
+Observed on 14 November 2026. These are correctness checks, not a production certification or a capacity/latency benchmark.
 
 | Check | Observed result |
 | --- | --- |
-| JDK | Eclipse Temurin 21.0.13 |
-| Framework | Spring Boot 3.5.16 |
-| Build tool | Maven 3.9.11; generated Maven wrapper also starts successfully |
-| Maven verify | BUILD SUCCESS; executable Spring Boot JAR produced |
-| API/database tests | 11 passed, 0 failures/errors/skips, real PostgreSQL 14.19 |
-| Redis behaviour tests | 4 passed, 0 failures/errors/skips, mocked Redis client |
-| Python example | Passed over real local HTTP with PostgreSQL; Redis limiting/cache disabled for this walkthrough |
-| Example outcome | Workspace/customer created; slots discovered; booking created; retry returned original ID; cancellation completed; tokens revoked |
-| Java formatting | Google Java Format 1.28.0 applied |
+| Build/runtime | Java 21.0.13, Spring Boot 3.5.16, Maven 3.9.11 |
+| Java verification | Maven verify: BUILD SUCCESS; 32 tests passed, no failures/errors/skips |
+| API integration | 24 tests against real embedded PostgreSQL 14.19 |
+| Migration upgrade | V1 database with an existing booking upgraded to V2; reservation/request fields backfilled; direct conflicting insert rejected |
+| Recurrence | 2 checks for local-time preservation and DST gap/overlap rejection |
+| Request body | Oversized JSON and unknown-length body checks pass |
+| Redis behaviour | 4 controlled client-mock checks; not a real Redis transport/failover test |
+| Consumer client | 8 Node.js fetch/cookie/error/idempotency checks pass |
+| TypeScript | TypeScript 5.9.3 strict declaration/consumer compile check passes |
+| Live consumer walkthrough | Passed over real local HTTP: cookie and bearer auth, provider invitation/permissions, group seats, cancellation, rescheduling/replay, batch booking, blockouts, notifications and audit |
+| Original consumer walkthrough | Python example still passes over real local HTTP; create/retry/cancel and token revocation |
+| API contract | OpenAPI generated from running application: 41 paths / 52 HTTP operations |
+| Postman | 52 requests generated from current OpenAPI; JSON structure and operation coverage checked |
+| Legacy inventory | 273 unique supplied paths represented exactly once; every mapped canonical target resolves to a real operation |
+| Formatting | Google Java Format 1.28.0 applied; git diff whitespace check passes |
 
-## Covered behaviours
+The live walkthroughs disable Redis request limiting/catalogue caching so they can run with the embedded database alone. They do not validate Redis transport or a public deployment. The JavaScript cookie flow is verified through Node.js 24; browser CORS/cookie policy and the CI Node.js 22 job still require their own environment verification.
 
-- Two competing customers cannot book the same provider/time.
-- Concurrent retries with the same key return the same booking.
-- Reusing a key with a changed payload returns 409.
-- A customer cannot have overlapping appointments with different providers.
-- Adjacent appointments work and cancellation releases availability.
-- Tenant, customer ownership and ADMIN permissions are enforced.
-- Cancellation deadlines and input bounds are enforced.
-- Tokens are hashed, expire and can be revoked individually/all at once.
-- Browser session cookies require CSRF for writes; the real CSRF cookie/header bootstrap is exercised.
-- Invalid bearer authentication never falls back to an otherwise valid cookie.
-- Slot discovery excludes confirmed provider appointments.
-- OpenAPI distinguishes public credential endpoints from authenticated booking endpoints.
-- Rate limits return 429 with Retry-After and fail closed when Redis is unavailable.
-- Cached catalogue keys include tenant and pagination; cache failure falls back to database access.
+## Specific failure cases exercised
 
-## Not verified here
+- Simultaneous provider conflict, last-seat competition and same-key retries.
+- Customer overlap across providers, shared-room conflicts, adjacent bookings and cancellation release.
+- Atomic batch/series rollback and successful replay.
+- Failed reschedule preserves the original appointment; successful reschedule retains original-create retry safety.
+- Tenant/customer/provider permissions, cross-tenant resource associations and guarded availability deletion.
+- Session cancellation updates all enrolled bookings and creates local notifications.
+- Invitation token hashing, acceptance/replay, revocation, role restrictions and linked provider permissions.
+- Password changes revoke all sessions; expired tokens and invalid bearer authentication are rejected.
+- Stale/revoked browser cookies do not block credential login; login rotates CSRF and the SDK refreshes it.
+- Concurrent SDK writes share one CSRF bootstrap; unknown write failures retain their idempotency key.
+- Business booking horizon, public signup controls and explicit provider-service assignment.
 
-- Docker/Compose execution: no container runtime was available. Compose targets PostgreSQL 17; integration tests used the embedded PostgreSQL 14.19 distribution.
-- Real Redis transport, multi-replica rate-limit behaviour and failover.
-- Kubernetes deployment, managed database/Redis TLS and production browser origins.
-- Capacity/latency/load targets, external security audit, vulnerability scan or backup/restore drill.
-- Planned payment, wallet, subscription, recurring/group lesson and notification modules.
-- GitHub Actions execution is separate from this local verification; review the repository Actions tab after publication.
+## Not verified or not implemented
 
-No real user data or employer source code is included in fixtures.
+- Docker/Compose execution: no container runtime was available; Compose targets PostgreSQL 17, while integration tests use PostgreSQL 14.19.
+- Live Redis transport, rate-limit behaviour across deployed replicas, failover and TLS.
+- Production browser origins, Kubernetes deployment, backup/restore, penetration testing or dependency vulnerability audit.
+- Load/latency targets; the load script is a template, not measured evidence.
+- Financial integrations, wallets, app-store receipts, managed dependants, learning records, private file storage and external notifications: see the explicit coverage map/roadmap.
+- Remote GitHub Actions outcomes are separate from the local results above.
+
+All walkthroughs and fixtures use synthetic data. No live payment, email, SMS or push action was performed.

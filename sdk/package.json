@@ -1,0 +1,25 @@
+{
+  "name": "@rahul-yadav/booking-client",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "description": "Fetch-based client for Booking Platform API",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.mjs"
+    }
+  },
+  "types": "./index.d.ts",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.mjs",
+    "check:types": "tsc --noEmit --strict --target ES2022 --module NodeNext --moduleResolution NodeNext --lib ES2022,DOM test/consumer-types.mts"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "5.9.3"
+  }
+}

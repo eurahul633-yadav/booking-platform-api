@@ -66,7 +66,7 @@ class RedisBehaviourTest {
     String otherKey = "booking:catalog:v1:" + other.tenantId() + ":1:10";
     when(values.get(otherKey)).thenReturn("[]");
     var db = mock(JdbcClient.class);
-    var catalog = new CatalogService(db, redis, new ObjectMapper(), true);
+    var catalog = new CatalogService(db, redis, new ObjectMapper(), true, new BusinessService(db));
     assertThat(catalog.services(actor, 0, 20)).hasSize(1);
     assertThat(catalog.services(other, 1, 10)).isEmpty();
     verifyNoInteractions(db);
@@ -81,7 +81,7 @@ class RedisBehaviourTest {
     var db = mock(JdbcClient.class, RETURNS_DEEP_STUBS);
     var actor = new Actor(UUID.randomUUID(), UUID.randomUUID(), "CUSTOMER", UUID.randomUUID());
     // A reachable database is requested after the cache fails; no cache exception leaks.
-    var catalog = new CatalogService(db, redis, new ObjectMapper(), true);
+    var catalog = new CatalogService(db, redis, new ObjectMapper(), true, new BusinessService(db));
     assertThat(catalog.services(actor, 0, 20)).isEmpty();
     verify(db).sql(contains("WHERE tenant_id=:tenant"));
   }

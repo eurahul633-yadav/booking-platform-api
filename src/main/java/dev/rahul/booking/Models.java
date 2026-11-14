@@ -34,7 +34,7 @@ public final class Models {
   public record AvailabilityRequest(@NotNull Instant startsAt, @NotNull Instant endsAt) {}
 
   public record BookingRequest(
-      @NotNull UUID providerId, @NotNull UUID serviceId, @NotNull Instant startsAt) {}
+      @NotNull UUID providerId, @NotNull UUID serviceId, @NotNull Instant startsAt, UUID roomId) {}
 
   public record Provider(UUID id, String name, String timeZone) {}
 
@@ -50,7 +50,9 @@ public final class Models {
       Instant startsAt,
       Instant endsAt,
       String status,
-      int cancellationHours) {}
+      int cancellationHours,
+      UUID roomId,
+      UUID sessionId) {}
 
   public record Page<T>(List<T> items, int page, int size, boolean hasNext) {}
 }

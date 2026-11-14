@@ -1,0 +1,1499 @@
+{
+  "info": {
+    "name": "Booking Platform API 0.2.0",
+    "description": "Working canonical routes only. Configure IDs from real responses. Bootstrap CSRF before credential POSTs. Use a new idempotency key for each intended command and preserve it for retries. See docs/CONSUMER_GUIDE.md.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{accessToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "accessToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "csrfToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "providerId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "serviceId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "locationId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "roomId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "bookingId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "sessionId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "invitationId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "invitationToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "userId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "notificationId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "blockoutId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "windowId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "startsAt",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "endsAt",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "rescheduledStartsAt",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "from",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "to",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "type": "string"
+    },
+    {
+      "key": "tenantSlug",
+      "value": "demo-workspace",
+      "type": "string"
+    },
+    {
+      "key": "email",
+      "value": "owner@example.test",
+      "type": "string"
+    },
+    {
+      "key": "password",
+      "value": "replace-with-a-long-local-password",
+      "type": "string"
+    },
+    {
+      "key": "currentPassword",
+      "value": "replace-with-your-current-password",
+      "type": "string"
+    },
+    {
+      "key": "newPassword",
+      "value": "replace-with-a-different-long-password",
+      "type": "string"
+    },
+    {
+      "key": "idempotencyKey",
+      "value": "example-command-001",
+      "type": "string"
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "if (!pm.collectionVariables.get('startsAt')) {",
+          "  const start = new Date(Date.now() + 5 * 86400000); start.setUTCMilliseconds(0);",
+          "  pm.collectionVariables.set('startsAt', start.toISOString());",
+          "  pm.collectionVariables.set('endsAt', new Date(+start + 3 * 3600000).toISOString());",
+          "  pm.collectionVariables.set('rescheduledStartsAt', new Date(+start + 3600000).toISOString());",
+          "  pm.collectionVariables.set('from', start.toISOString());",
+          "  pm.collectionVariables.set('to', new Date(+start + 7 * 86400000).toISOString());",
+          "}"
+        ]
+      }
+    }
+  ],
+  "item": [
+    {
+      "name": "auth",
+      "item": [
+        {
+          "name": "POST /api/v1/auth/workspaces",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-XSRF-TOKEN",
+                "value": "{{csrfToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/auth/workspaces",
+            "description": "Canonical API operation; see the consumer guide and OpenAPI schema.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"slug\": \"{{tenantSlug}}\",\n  \"name\": \"Demo name\",\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST /api/v1/auth/token",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-XSRF-TOKEN",
+                "value": "{{csrfToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/auth/token",
+            "description": "Canonical API operation; see the consumer guide and OpenAPI schema.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tenantSlug\": \"{{tenantSlug}}\",\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200) pm.collectionVariables.set('accessToken', pm.response.json().accessToken);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "POST /api/v1/auth/register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-XSRF-TOKEN",
+                "value": "{{csrfToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/auth/register",
+            "description": "Canonical API operation; see the consumer guide and OpenAPI schema.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tenantSlug\": \"{{tenantSlug}}\",\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST /api/v1/auth/logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-XSRF-TOKEN",
+                "value": "{{csrfToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/auth/logout",
+            "description": "Canonical API operation; see the consumer guide and OpenAPI schema."
+          },
+          "response": []
+        },
+        {
+          "name": "POST /api/v1/auth/logout-all",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-XSRF-TOKEN",
+                "value": "{{csrfToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/auth/logout-all",
+            "description": "Canonical API operation; see the consumer guide and OpenAPI schema."
+          },
+          "response": []
+        },
+        {
+          "name": "POST /api/v1/auth/login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-XSRF-TOKEN",
+                "value": "{{csrfToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/auth/login",
+            "description": "Canonical API operation; see the consumer guide and OpenAPI schema.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tenantSlug\": \"{{tenantSlug}}\",\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST /api/v1/auth/invitations/accept",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-XSRF-TOKEN",
+                "value": "{{csrfToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/auth/invitations/accept",
+            "description": "Canonical API operation; see the consumer guide and OpenAPI schema.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"token\": \"{{invitationToken}}\",\n  \"password\": \"{{password}}\",\n  \"displayName\": \"Demo account\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET /api/v1/auth/me",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/auth/me",
+            "description": "Canonical API operation; see the consumer guide and OpenAPI schema."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /api/v1/auth/csrf",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/auth/csrf?csrf=20",
+            "description": "Canonical API operation; see the consumer guide and OpenAPI schema.",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200) pm.collectionVariables.set('csrfToken', pm.response.json().token);"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "booking-events",
+      "item": [
+        {
+          "name": "GET /api/v1/booking-events",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/booking-events?page=0&size=20",
+            "description": "Canonical API operation; see the consumer guide and OpenAPI schema."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "bookings",
+      "item": [
+        {
+          "name": "GET /api/v1/bookings",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/bookings?page=0&size=20",
+            "description": "Canonical API operation; see the consumer guide and OpenAPI schema."
+          },
+          "response": []
+        },
+        {
+          "name": "POST /api/v1/bookings",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-XSRF-TOKEN",
+                "value": "{{csrfToken}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{idempotencyKey}}",
+                "description": "Change for each intended command; preserve for retries of that command."
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/bookings",
+            "description": "Canonical API operation; see the consumer guide and OpenAPI schema.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"providerId\": \"{{providerId}}\",\n  \"serviceId\": \"{{serviceId}}\",\n  \"startsAt\": \"{{startsAt}}\",\n  \"roomId\": \"{{roomId}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST /api/v1/bookings/{id}/reschedule",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-XSRF-TOKEN",
+                "value": "{{csrfToken}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{idempotencyKey}}",
+                "description": "Change for each intended command; preserve for retries of that command."
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/bookings/{{bookingId}}/reschedule",
+            "description": "Canonical API operation; see the consumer guide and OpenAPI schema.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"startsAt\": \"{{rescheduledStartsAt}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST /api/v1/bookings/{id}/cancel",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-XSRF-TOKEN",
+                "value": "{{csrfToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/bookings/{{bookingId}}/cancel",
+            "description": "Canonical API operation; see the consumer guide and OpenAPI schema."
+          },
+          "response": []
+        },
+        {
+          "name": "POST /api/v1/bookings/batch",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-XSRF-TOKEN",
+                "value": "{{csrfToken}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{idempotencyKey}}",
+                "description": "Change for each intended command; preserve for retries of that command."
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/bookings/batch",
+            "description": "Canonical API operation; see the consumer guide and OpenAPI schema.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"bookings\": [\n    {\n      \"providerId\": \"{{providerId}}\",\n      \"serviceId\": \"{{serviceId}}\",\n      \"startsAt\": \"{{startsAt}}\",\n      \"roomId\": \"{{roomId}}\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET /api/v1/bookings/{id}",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/bookings/{{bookingId}}",
+            "description": "Canonical API operation; see the consumer guide and OpenAPI schema."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "business",
+      "item": [
+        {
+          "name": "GET /api/v1/business/settings",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/business/settings",
+            "description": "Canonical API operation; see the consumer guide and OpenAPI schema."
+          },
+          "response": []
+        },
+        {
+          "name": "PUT /api/v1/business/settings",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-XSRF-TOKEN",
+                "value": "{{csrfToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/business/settings",
+            "description": "Canonical API operation; see the consumer guide and OpenAPI schema.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"bookingHorizonDays\": 366,\n  \"minimumNoticeMinutes\": 0,\n  \"customerSignupEnabled\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "capabilities",
+      "item": [
+        {
+          "name": "GET /api/v1/capabilities",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/capabilities",
+            "description": "Canonical API operation; see the consumer guide and OpenAPI schema."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "invitations",
+      "item": [
+        {
+          "name": "GET /api/v1/invitations",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/invitations?page=0&size=20",
+            "description": "Canonical API operation; see the consumer guide and OpenAPI schema."
+          },
+          "response": []
+        },
+        {
+          "name": "POST /api/v1/invitations",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-XSRF-TOKEN",
+                "value": "{{csrfToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/invitations",
+            "description": "Canonical API operation; see the consumer guide and OpenAPI schema.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{email}}\",\n  \"role\": \"PROVIDER\",\n  \"providerId\": \"{{providerId}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST /api/v1/invitations/{id}/revoke",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-XSRF-TOKEN",
+                "value": "{{csrfToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/invitations/{{invitationId}}/revoke",
+            "description": "Canonical API operation; see the consumer guide and OpenAPI schema."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "locations",
+      "item": [
+        {
+          "name": "PUT /api/v1/locations/{id}",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-XSRF-TOKEN",
+                "value": "{{csrfToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/locations/{{locationId}}",
+            "description": "Canonical API operation; see the consumer guide and OpenAPI schema.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Demo name\",\n  \"address\": \"Synthetic studio address\",\n  \"timeZone\": \"Europe/Vilnius\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET /api/v1/locations",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/locations?page=0&size=20",
+            "description": "Canonical API operation; see the consumer guide and OpenAPI schema."
+          },
+          "response": []
+        },
+        {
+          "name": "POST /api/v1/locations",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-XSRF-TOKEN",
+                "value": "{{csrfToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/locations",
+            "description": "Canonical API operation; see the consumer guide and OpenAPI schema.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Demo name\",\n  \"address\": \"Synthetic studio address\",\n  \"timeZone\": \"Europe/Vilnius\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET /api/v1/locations/{id}/rooms",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/locations/{{locationId}}/rooms?page=0&size=20",
+            "description": "Canonical API operation; see the consumer guide and OpenAPI schema."
+          },
+          "response": []
+        },
+        {
+          "name": "POST /api/v1/locations/{id}/rooms",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-XSRF-TOKEN",
+                "value": "{{csrfToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/locations/{{locationId}}/rooms",
+            "description": "Canonical API operation; see the consumer guide and OpenAPI schema.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Demo name\",\n  \"capacity\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "me",
+      "item": [
+        {
+          "name": "GET /api/v1/me/profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/me/profile",
+            "description": "Canonical API operation; see the consumer guide and OpenAPI schema."
+          },
+          "response": []
+        },
+        {
+          "name": "PUT /api/v1/me/profile",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-XSRF-TOKEN",
+                "value": "{{csrfToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/me/profile",
+            "description": "Canonical API operation; see the consumer guide and OpenAPI schema.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"displayName\": \"Demo account\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST /api/v1/me/password",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-XSRF-TOKEN",
+                "value": "{{csrfToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/me/password",
+            "description": "Canonical API operation; see the consumer guide and OpenAPI schema.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"currentPassword\": \"{{currentPassword}}\",\n  \"newPassword\": \"{{newPassword}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "notifications",
+      "item": [
+        {
+          "name": "POST /api/v1/notifications/{id}/read",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-XSRF-TOKEN",
+                "value": "{{csrfToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/notifications/{{notificationId}}/read",
+            "description": "Canonical API operation; see the consumer guide and OpenAPI schema."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /api/v1/notifications",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/notifications?page=0&size=20",
+            "description": "Canonical API operation; see the consumer guide and OpenAPI schema."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "providers",
+      "item": [
+        {
+          "name": "PUT /api/v1/providers/{id}/services",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-XSRF-TOKEN",
+                "value": "{{csrfToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/providers/{{providerId}}/services",
+            "description": "Canonical API operation; see the consumer guide and OpenAPI schema.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"serviceIds\": [\n    \"{{serviceId}}\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET /api/v1/providers",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/providers?page=0&size=20",
+            "description": "Canonical API operation; see the consumer guide and OpenAPI schema."
+          },
+          "response": []
+        },
+        {
+          "name": "POST /api/v1/providers",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-XSRF-TOKEN",
+                "value": "{{csrfToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/providers",
+            "description": "Canonical API operation; see the consumer guide and OpenAPI schema.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Demo name\",\n  \"timeZone\": \"Europe/Vilnius\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET /api/v1/providers/{id}/blockouts",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/providers/{{providerId}}/blockouts?from={{from}}&to={{to}}",
+            "description": "Canonical API operation; see the consumer guide and OpenAPI schema."
+          },
+          "response": []
+        },
+        {
+          "name": "POST /api/v1/providers/{id}/blockouts",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-XSRF-TOKEN",
+                "value": "{{csrfToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/providers/{{providerId}}/blockouts",
+            "description": "Canonical API operation; see the consumer guide and OpenAPI schema.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"startsAt\": \"{{startsAt}}\",\n  \"endsAt\": \"{{endsAt}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET /api/v1/providers/{id}/availability",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/providers/{{providerId}}/availability?from={{from}}&to={{to}}",
+            "description": "Canonical API operation; see the consumer guide and OpenAPI schema."
+          },
+          "response": []
+        },
+        {
+          "name": "POST /api/v1/providers/{id}/availability",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-XSRF-TOKEN",
+                "value": "{{csrfToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/providers/{{providerId}}/availability",
+            "description": "Canonical API operation; see the consumer guide and OpenAPI schema.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"startsAt\": \"{{startsAt}}\",\n  \"endsAt\": \"{{endsAt}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET /api/v1/providers/{id}/slots",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/providers/{{providerId}}/slots?serviceId={{serviceId}}&from={{from}}&to={{to}}",
+            "description": "Canonical API operation; see the consumer guide and OpenAPI schema."
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE /api/v1/providers/{id}/blockouts/{block}",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-XSRF-TOKEN",
+                "value": "{{csrfToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/providers/{{providerId}}/blockouts/{{blockoutId}}",
+            "description": "Canonical API operation; see the consumer guide and OpenAPI schema."
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE /api/v1/providers/{id}/availability/{window}",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-XSRF-TOKEN",
+                "value": "{{csrfToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/providers/{{providerId}}/availability/{{windowId}}",
+            "description": "Canonical API operation; see the consumer guide and OpenAPI schema."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "services",
+      "item": [
+        {
+          "name": "GET /api/v1/services",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/services?page=0&size=20",
+            "description": "Canonical API operation; see the consumer guide and OpenAPI schema."
+          },
+          "response": []
+        },
+        {
+          "name": "POST /api/v1/services",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-XSRF-TOKEN",
+                "value": "{{csrfToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/services",
+            "description": "Canonical API operation; see the consumer guide and OpenAPI schema.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Demo name\",\n  \"durationMinutes\": 30,\n  \"cancellationHours\": 24\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "session-series",
+      "item": [
+        {
+          "name": "POST /api/v1/session-series",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-XSRF-TOKEN",
+                "value": "{{csrfToken}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{idempotencyKey}}",
+                "description": "Change for each intended command; preserve for retries of that command."
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/session-series",
+            "description": "Canonical API operation; see the consumer guide and OpenAPI schema.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"providerId\": \"{{providerId}}\",\n  \"serviceId\": \"{{serviceId}}\",\n  \"roomId\": \"{{roomId}}\",\n  \"startsAt\": \"{{startsAt}}\",\n  \"capacity\": 2,\n  \"occurrences\": 2,\n  \"intervalWeeks\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "sessions",
+      "item": [
+        {
+          "name": "GET /api/v1/sessions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/sessions?from={{from}}&to={{to}}&page=0&size=20",
+            "description": "Canonical API operation; see the consumer guide and OpenAPI schema."
+          },
+          "response": []
+        },
+        {
+          "name": "POST /api/v1/sessions",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-XSRF-TOKEN",
+                "value": "{{csrfToken}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{idempotencyKey}}",
+                "description": "Change for each intended command; preserve for retries of that command."
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/sessions",
+            "description": "Canonical API operation; see the consumer guide and OpenAPI schema.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"providerId\": \"{{providerId}}\",\n  \"serviceId\": \"{{serviceId}}\",\n  \"roomId\": \"{{roomId}}\",\n  \"startsAt\": \"{{startsAt}}\",\n  \"capacity\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST /api/v1/sessions/{id}/enrolments",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-XSRF-TOKEN",
+                "value": "{{csrfToken}}"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{idempotencyKey}}",
+                "description": "Change for each intended command; preserve for retries of that command."
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/sessions/{{sessionId}}/enrolments",
+            "description": "Canonical API operation; see the consumer guide and OpenAPI schema."
+          },
+          "response": []
+        },
+        {
+          "name": "POST /api/v1/sessions/{id}/cancel",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-XSRF-TOKEN",
+                "value": "{{csrfToken}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/sessions/{{sessionId}}/cancel",
+            "description": "Canonical API operation; see the consumer guide and OpenAPI schema."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /api/v1/sessions/{id}",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/sessions/{{sessionId}}",
+            "description": "Canonical API operation; see the consumer guide and OpenAPI schema."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "users",
+      "item": [
+        {
+          "name": "GET /api/v1/users",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/users?page=0&size=20",
+            "description": "Canonical API operation; see the consumer guide and OpenAPI schema."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /api/v1/users/{id}",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/users/{{userId}}",
+            "description": "Canonical API operation; see the consumer guide and OpenAPI schema."
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

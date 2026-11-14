@@ -2,3 +2,6 @@
 target
 .env
 *.zip
+
+node_modules
+sdk/node_modules

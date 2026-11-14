@@ -17,10 +17,15 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
   private final SessionService sessions;
   private final boolean secure;
+  private final org.springframework.security.web.csrf.CookieCsrfTokenRepository csrfRepository;
 
-  public AuthController(SessionService sessions, @Value("${app.cookie-secure}") boolean secure) {
+  public AuthController(
+      SessionService sessions,
+      @Value("${app.cookie-secure}") boolean secure,
+      org.springframework.security.web.csrf.CookieCsrfTokenRepository csrfRepository) {
     this.sessions = sessions;
     this.secure = secure;
+    this.csrfRepository = csrfRepository;
   }
 
   @GetMapping("/csrf")
@@ -48,9 +53,13 @@ public class AuthController {
   }
 
   @PostMapping("/login")
-  public Map<String, Long> login(@Valid @RequestBody LoginRequest r, HttpServletResponse response) {
+  public Map<String, Long> login(
+      @Valid @RequestBody LoginRequest r,
+      HttpServletRequest request,
+      HttpServletResponse response) {
     var issued = sessions.login(r, "COOKIE");
     cookie(response, issued.accessToken(), issued.expiresIn());
+    csrfRepository.saveToken(null, request, response);
     response.setHeader("Cache-Control", "no-store");
     return Map.of("expiresIn", issued.expiresIn());
   }

@@ -15,3 +15,13 @@ jobs:
           java-version: '21'
           cache: maven
       - run: ./mvnw -B verify
+  client:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci --prefix sdk
+      - run: npm run check:types --prefix sdk
+      - run: node --test sdk/test/*.test.mjs

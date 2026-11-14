@@ -13,7 +13,7 @@ public class OpenApiConfig {
         .info(
             new Info()
                 .title("Booking Platform API")
-                .version("0.1.0")
+                .version("0.2.0")
                 .description(
                     "Tenant-scoped booking core. Browser cookie requests require X-XSRF-TOKEN;"
                         + " bearer requests use opaque access tokens."))

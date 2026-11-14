@@ -1,28 +1,33 @@
-# Roadmap and release gates
+# Roadmap and remaining contracts
 
-The complete booking-platform scope is larger than the current booking core. Each phase must add working endpoints, migrations, OpenAPI documentation, negative tests and concurrency tests where applicable. These are planned, not implemented.
+## Delivered
 
-| Phase | Deliverables | Acceptance evidence |
+| Release | Working scope |
+| --- | --- |
+| 0.1 | Tenant isolation, owner/customer authentication, catalogue, explicit availability, private booking/cancellation, basic cache/limits and OpenAPI |
+| 0.2 | Provider accounts/invitations, profiles/password changes, settings, locations/rooms, provider-service assignment, blockouts, guarded window removal, atomic rescheduling/batches, capacity-safe sessions/weekly series, in-app notifications/audit, SDK/Postman and legacy inventory |
+
+The complete [273-path inventory](ENDPOINT_COVERAGE.md) records feature references. AVAILABLE means a related canonical operation exists, not that old requests or full legacy semantics are reproduced. PARTIAL and PLANNED rows remain outstanding.
+
+## Next implementation work
+
+| Domain | Required implementation / decisions | Evidence required |
 | --- | --- | --- |
-| 0.1 core | Tenant isolation, ADMIN/CUSTOMER, auth sessions/tokens, provider windows, private appointment booking, cancellation, safe retries, cache, rate limits | Real PostgreSQL API/concurrency/security tests; initial delivery |
-| 0.2 scheduling | Provider login and assignments, locations/rooms, working hours, date exceptions/blockouts, buffers, minimum notice, rescheduling | Room/provider/customer conflicts; DST edge cases; atomic reschedule rollback |
-| 0.3 lessons | Private/semi-private/group seat capacity, guardian/managed-student relationships, recurring series, predefined lessons and bulk booking | Last-seat race, guardian permissions, series partial-failure policy, bounded recurrence expansion |
-| 0.4 payments | Payment provider port and Stripe adapter, signed/idempotent webhook inbox, booking holds with expiry, refunds/cancellation policies | Test-mode payment confirmation, duplicate/out-of-order webhooks, hold expiry race, refund reconciliation |
-| 0.5 wallet/subscriptions | Immutable double-entry ledger, currency/amount handling, subscription entitlements, cash/hybrid payment policies | Balanced ledger invariant, duplicate charge protection, concurrent spend, reconciliation |
-| 0.6 integrations | Transactional outbox worker, email/push/SMS ports, delivery retries, tenant webhooks, object storage, opt-in files | Retry/dead-letter visibility, signature verification, upload permissions, no external call inside transaction |
-| 0.7 identity | Email verification/reset, invitations, account abuse prevention, OIDC/JWT adapter, rotating refresh families, service-account API keys | Replay detection, session fixation tests, password-reset revocation, least-privilege scopes |
-| 1.0 release | Stable API spec, SDK examples, migrations/upgrade policy, permissive license, deployment guide, contribution guide | Full security/dependency review, Redis integration tests, reproducible load results, backup restore and failure drills |
+| Guardians and managed students | Distinguish login users from dependants; guardian authority, adult managed access, invitations and booking on behalf | Relationship permissions, attendee conflicts, guardian revocation and access tests |
+| Instructor relationships | Requests, approval/decline/relink, location memberships, contact visibility and notes | State transitions, ownership, duplicate requests and relationship removal |
+| Availability lifecycle | Local working hours, date exceptions, recurring blockouts, buffers, provider/location restrictions, schedule edit/split and archival | DST cases, existing booking effects, concurrent edits |
+| Semi-private/cart checkout | Partner invitations, seat pricing, persisted carts, multi-lesson holds, expiry and atomic checkout semantics | Last-seat/hold-expiry races, partial failure rules |
+| Payments and orders | Provider interface and Stripe adapter; charge ownership, fees, connected accounts, signed webhooks, refunds and payout schedules | Test-mode integrations, duplicate/out-of-order webhooks and reconciliation |
+| Wallets/credits | Immutable balanced ledger, currencies/amounts, funding sources, credit expiry and settlement | Balanced ledger, concurrent spending, idempotent adjustments and refunds |
+| Subscriptions | Apple/Google/Stripe lifecycle, verified receipts, renewals, refunds and entitlements | Signed notifications, replay handling, revocation and reconciliation |
+| Learning records | Lesson plans/categories, instructor/student assignments, progress/skill reports, read state and completion | Role visibility, editing/version policy and assignment ownership |
+| Files and waivers | Private storage, allowed sizes/types, signed access, signatures and retention/deletion policy | Access controls, file validation and lifecycle tests |
+| External communication | Transactional outbox, email/SMS/push ports, preferences and notification areas | Retry/backoff, delivery state/dead letters and user opt-out |
+| Identity recovery | Verification, OTP, password recovery, account merge/deletion, refresh families and service-account keys | Anti-enumeration, replay/revocation and abuse controls |
+| Reporting | Date filters, attendance/payment/fee summaries and dashboards | Query correctness, query plans and bounded pagination |
 
-Payment states must never be simulated as paid in a production-facing adapter. Group bookings require a capacity model distinct from the current exclusion of any provider overlap. Do not simply remove the overlap constraint and count rows without serialized capacity enforcement.
+Endpoint names cannot establish charge/refund rules, guardian authority, payload shapes or provider credentials. Add sanitized request/response examples and permission/business rules before declaring legacy parity.
 
-## Public release checklist
+## Public release gates
 
-- Complete the intended public feature scope and label experimental modules.
-- Retain the MIT license and review dependency notices for redistribution.
-- Review all history and fixtures for secrets, customer records and employer code.
-- Run dependency vulnerability checks, secret scanning and the full verification pipeline.
-- Verify HTTPS cookies/CORS/CSRF in the actual browser deployment.
-- Test Redis concurrency/failover and PostgreSQL backup/restore.
-- Measure representative latency percentiles/error rate at declared load and record hardware, data volume and query plans.
-- Add support policy and known limitations to the release notes.
-- Change GitHub visibility only when explicitly requested; private is the development default.
+Keep the repository private until publication is explicitly requested. Complete the intended public scope, preserve the MIT license, review dependency notices/history/fixtures, run dependency and secret checks, verify HTTPS/CORS/CSRF in the real browser deployment, test Redis transport/failover and backup restore, and measure representative latency/error rates with stated hardware/data/load. Add a support and API compatibility policy before a stable public release.
