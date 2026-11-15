@@ -85,7 +85,7 @@ public class BookingController {
       @AuthenticationPrincipal Actor a,
       @Valid @RequestBody BookingRequest r,
       @RequestHeader(value = "Idempotency-Key", required = false) String key) {
-    return bookings.create(a, r, key);
+    return bookings.createFree(a, r, key);
   }
 
   @GetMapping("/bookings/{id}")

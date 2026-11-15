@@ -63,10 +63,18 @@ public class IdentityService {
   }
 
   public User profile(Actor a, Profile r) {
+    if ("MANAGED_STUDENT".equals(a.role())) throw ApiFailure.forbidden();
     db.sql("UPDATE users SET display_name=:name WHERE tenant_id=:tenant AND id=:id")
         .param("name", r.displayName().trim())
         .param("tenant", a.tenantId())
         .param("id", a.userId())
+        .update();
+    db.sql(
+            "UPDATE participants SET display_name=:name WHERE tenant_id=:tenant AND user_id=:user"
+                + " AND guardian_id IS NULL")
+        .param("name", r.displayName().trim())
+        .param("tenant", a.tenantId())
+        .param("user", a.userId())
         .update();
     return me(a);
   }

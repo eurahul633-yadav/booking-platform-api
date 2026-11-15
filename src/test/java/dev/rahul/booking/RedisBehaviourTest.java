@@ -57,13 +57,13 @@ class RedisBehaviourTest {
     var tenant = UUID.randomUUID();
     var actor = new Actor(UUID.randomUUID(), tenant, "CUSTOMER", UUID.randomUUID());
     var other = new Actor(UUID.randomUUID(), UUID.randomUUID(), "CUSTOMER", UUID.randomUUID());
-    String key = "booking:catalog:v1:" + tenant + ":0:20";
+    String key = "booking:catalog:v3:" + tenant + ":0:20";
     when(values.get(key))
         .thenReturn(
             "[{\"id\":\""
                 + UUID.randomUUID()
                 + "\",\"name\":\"Lesson\",\"durationMinutes\":30,\"cancellationHours\":24}]");
-    String otherKey = "booking:catalog:v1:" + other.tenantId() + ":1:10";
+    String otherKey = "booking:catalog:v3:" + other.tenantId() + ":1:10";
     when(values.get(otherKey)).thenReturn("[]");
     var db = mock(JdbcClient.class);
     var catalog = new CatalogService(db, redis, new ObjectMapper(), true, new BusinessService(db));

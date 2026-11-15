@@ -175,8 +175,9 @@ public class PlatformController {
   public Models.Booking enrol(
       @AuthenticationPrincipal Actor a,
       @PathVariable UUID id,
-      @RequestHeader(value = "Idempotency-Key", required = false) String key) {
-    return scheduling.enrol(a, id, key);
+      @RequestHeader(value = "Idempotency-Key", required = false) String key,
+      @Valid @RequestBody(required = false) CommerceModels.Enrolment request) {
+    return scheduling.enrol(a, id, key, request == null ? null : request.participantId());
   }
 
   @PostMapping("/sessions/{id}/cancel")

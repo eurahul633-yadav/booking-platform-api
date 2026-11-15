@@ -95,12 +95,13 @@ public class CatalogService {
         .param("duration", r.durationMinutes())
         .param("cancel", r.cancellationHours())
         .update();
-    return new Models.Service(id, r.name().trim(), r.durationMinutes(), r.cancellationHours());
+    return new Models.Service(
+        id, r.name().trim(), r.durationMinutes(), r.cancellationHours(), 0, "USD");
   }
 
   public List<Models.Service> services(Actor actor, int page, int size) {
     bounds(page, size);
-    String key = "booking:catalog:v1:" + actor.tenantId() + ":" + page + ":" + size;
+    String key = "booking:catalog:v3:" + actor.tenantId() + ":" + page + ":" + size;
     if (cache)
       try {
         var value = redis.opsForValue().get(key);
@@ -111,8 +112,8 @@ public class CatalogService {
       }
     var result =
         db.sql(
-                "SELECT id,name,duration_minutes,cancellation_hours FROM services WHERE"
-                    + " tenant_id=:tenant ORDER BY id LIMIT :limit OFFSET :offset")
+                "SELECT id,name,duration_minutes,cancellation_hours,price_minor,currency FROM"
+                    + " services WHERE tenant_id=:tenant ORDER BY id LIMIT :limit OFFSET :offset")
             .param("tenant", actor.tenantId())
             .param("limit", size)
             .param("offset", page * size)
@@ -129,8 +130,8 @@ public class CatalogService {
 
   Models.Service service(Actor actor, UUID id) {
     return db.sql(
-            "SELECT id,name,duration_minutes,cancellation_hours FROM services WHERE"
-                + " tenant_id=:tenant AND id=:id")
+            "SELECT id,name,duration_minutes,cancellation_hours,price_minor,currency FROM services"
+                + " WHERE tenant_id=:tenant AND id=:id")
         .param("tenant", actor.tenantId())
         .param("id", id)
         .query((rs, n) -> mapService(rs))
@@ -143,7 +144,9 @@ public class CatalogService {
         rs.getObject("id", UUID.class),
         rs.getString("name"),
         rs.getInt("duration_minutes"),
-        rs.getInt("cancellation_hours"));
+        rs.getInt("cancellation_hours"),
+        rs.getLong("price_minor"),
+        rs.getString("currency"));
   }
 
   void lockProvider(Actor actor, UUID id) {

@@ -34,11 +34,21 @@ public final class Models {
   public record AvailabilityRequest(@NotNull Instant startsAt, @NotNull Instant endsAt) {}
 
   public record BookingRequest(
-      @NotNull UUID providerId, @NotNull UUID serviceId, @NotNull Instant startsAt, UUID roomId) {}
+      @NotNull UUID providerId,
+      @NotNull UUID serviceId,
+      @NotNull Instant startsAt,
+      UUID roomId,
+      UUID participantId) {}
 
   public record Provider(UUID id, String name, String timeZone) {}
 
-  public record Service(UUID id, String name, int durationMinutes, int cancellationHours) {}
+  public record Service(
+      UUID id,
+      String name,
+      int durationMinutes,
+      int cancellationHours,
+      long priceMinor,
+      String currency) {}
 
   public record Window(UUID id, Instant startsAt, Instant endsAt) {}
 
@@ -52,7 +62,9 @@ public final class Models {
       String status,
       int cancellationHours,
       UUID roomId,
-      UUID sessionId) {}
+      UUID sessionId,
+      UUID participantId,
+      UUID bookedBy) {}
 
   public record Page<T>(List<T> items, int page, int size, boolean hasNext) {}
 }

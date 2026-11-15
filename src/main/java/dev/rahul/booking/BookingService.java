@@ -17,18 +17,24 @@ public class BookingService {
   private final BusinessService business;
   private final Commands commands;
   private final NotificationService notifications;
+  private final ParticipantService participants;
+  private final SettlementService settlement;
 
   public BookingService(
       JdbcClient db,
       CatalogService catalog,
       BusinessService business,
       Commands commands,
-      NotificationService notifications) {
+      NotificationService notifications,
+      ParticipantService participants,
+      SettlementService settlement) {
     this.db = db;
     this.catalog = catalog;
     this.business = business;
     this.commands = commands;
     this.notifications = notifications;
+    this.participants = participants;
+    this.settlement = settlement;
   }
 
   static Booking map(ResultSet rs) throws SQLException {
@@ -42,18 +48,21 @@ public class BookingService {
         rs.getString("status"),
         rs.getInt("cancellation_hours"),
         rs.getObject("room_id", UUID.class),
-        rs.getObject("session_id", UUID.class));
+        rs.getObject("session_id", UUID.class),
+        rs.getObject("participant_id", UUID.class),
+        rs.getObject("booked_by", UUID.class));
   }
 
   @Transactional
   public Booking create(Actor a, BookingRequest r, String key) {
     Commands.key(key);
     commands.lock(a);
+    var reference = participants.reference(a, r.participantId());
     // Original request fields survive rescheduling, so a late create retry never creates another
     // booking.
     var old =
         db.sql(
-                "SELECT * FROM bookings WHERE tenant_id=:tenant AND customer_id=:customer AND"
+                "SELECT * FROM bookings WHERE tenant_id=:tenant AND booked_by=:customer AND"
                     + " idempotency_key=:key")
             .param("tenant", a.tenantId())
             .param("customer", a.userId())
@@ -64,7 +73,8 @@ public class BookingService {
                       || !r.providerId().equals(rs.getObject("provider_id", UUID.class))
                       || !r.serviceId().equals(rs.getObject("service_id", UUID.class))
                       || !r.startsAt().equals(rs.getTimestamp("request_starts_at").toInstant())
-                      || !Objects.equals(r.roomId(), rs.getObject("request_room_id", UUID.class)))
+                      || !Objects.equals(r.roomId(), rs.getObject("request_room_id", UUID.class))
+                      || !reference.id().equals(rs.getObject("participant_id", UUID.class)))
                     throw ApiFailure.conflict(
                         "Idempotency key was already used for a different request");
                   return map(rs);
@@ -72,6 +82,7 @@ public class BookingService {
             .optional();
     if (old.isPresent()) return old.get();
     catalog.lockProvider(a, r.providerId());
+    var student = participants.resolve(a, reference.id());
     var service = catalog.service(a, r.serviceId());
     business.requireServiceAllowed(a, r.providerId(), r.serviceId());
     business.validateStart(a, r.startsAt());
@@ -89,9 +100,26 @@ public class BookingService {
         r.startsAt(),
         end,
         service.cancellationHours(),
-        key);
-    notifications.event(a, id, a.userId(), r.providerId(), "BOOKING_CONFIRMED");
+        key,
+        student);
+    notifications.event(a, id, participants.payer(student), r.providerId(), "BOOKING_CONFIRMED");
     return get(a, id);
+  }
+
+  @Transactional
+  public Booking createFree(Actor a, BookingRequest r, String key) {
+    var original =
+        db.sql(
+                "SELECT id FROM bookings WHERE tenant_id=:tenant AND booked_by=:actor AND"
+                    + " idempotency_key=:key")
+            .param("tenant", a.tenantId())
+            .param("actor", a.userId())
+            .param("key", key)
+            .query(UUID.class)
+            .optional();
+    if (original.isEmpty() && catalog.service(a, r.serviceId()).priceMinor() > 0)
+      throw ApiFailure.conflict("Use checkout for a priced lesson");
+    return create(a, r, key);
   }
 
   void fits(Actor a, UUID provider, Instant start, Instant end) {
@@ -118,16 +146,19 @@ public class BookingService {
       Instant start,
       Instant end,
       int cancellation,
-      String key) {
+      String key,
+      CommerceModels.Student student) {
     db.sql(
             "INSERT INTO"
-                + " bookings(id,tenant_id,provider_id,service_id,customer_id,room_id,session_id,starts_at,ends_at,request_starts_at,request_room_id,cancellation_hours,status,idempotency_key)"
-                + " VALUES(:id,:tenant,:provider,:service,:customer,:room,:session,:start,:end,:start,:room,:cancel,'CONFIRMED',:key)")
+                + " bookings(id,tenant_id,provider_id,service_id,customer_id,room_id,session_id,starts_at,ends_at,request_starts_at,request_room_id,cancellation_hours,status,idempotency_key,participant_id,booked_by)"
+                + " VALUES(:id,:tenant,:provider,:service,:customer,:room,:session,:start,:end,:start,:room,:cancel,'CONFIRMED',:key,:participant,:actor)")
         .param("id", id)
         .param("tenant", a.tenantId())
         .param("provider", provider)
         .param("service", service)
-        .param("customer", a.userId())
+        .param("customer", participants.payer(student))
+        .param("participant", student.id())
+        .param("actor", a.userId())
         .param("room", room, Types.OTHER)
         .param("session", session, Types.OTHER)
         .param("start", utc(start))
@@ -138,8 +169,10 @@ public class BookingService {
   }
 
   private static final String ACCESS =
-      "b.tenant_id=:tenant AND (:admin OR b.customer_id=:user OR EXISTS(SELECT 1 FROM providers p"
-          + " WHERE p.id=b.provider_id AND p.tenant_id=b.tenant_id AND p.user_id=:user))";
+      "b.tenant_id=:tenant AND (:admin OR b.customer_id=:user OR EXISTS(SELECT 1 FROM participants"
+          + " s WHERE s.id=b.participant_id AND s.tenant_id=b.tenant_id AND s.user_id=:user) OR"
+          + " EXISTS(SELECT 1 FROM providers p WHERE p.id=b.provider_id AND p.tenant_id=b.tenant_id"
+          + " AND p.user_id=:user))";
 
   public Booking get(Actor a, UUID id) {
     return db.sql("SELECT b.* FROM bookings b WHERE " + ACCESS + " AND b.id=:id")
@@ -172,6 +205,7 @@ public class BookingService {
   private Booking lock(Actor a, UUID id) {
     commands.lock(a);
     var current = get(a, id);
+    if ("MANAGED_STUDENT".equals(a.role())) participants.resolve(a, current.participantId());
     catalog.lockProvider(a, current.providerId());
     db.sql("SELECT id FROM bookings WHERE tenant_id=:tenant AND id=:id FOR UPDATE")
         .param("tenant", a.tenantId())
@@ -192,6 +226,7 @@ public class BookingService {
         .param("tenant", a.tenantId())
         .param("id", id)
         .update();
+    settlement.cancel(a, b);
     notifications.event(a, id, b.customerId(), b.providerId(), "BOOKING_CANCELLED");
     return get(a, id);
   }
@@ -238,7 +273,7 @@ public class BookingService {
     var result = new ArrayList<Booking>();
     for (int i = 0; i < request.bookings().size(); i++)
       result.add(
-          create(a, request.bookings().get(i), "batch-" + SessionService.hash(key) + ":" + i));
+          createFree(a, request.bookings().get(i), "batch-" + SessionService.hash(key) + ":" + i));
     commands.save(a, "BATCH_PRIVATE", key, request, result.stream().map(Booking::id).toList());
     return result;
   }

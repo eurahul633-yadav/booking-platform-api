@@ -17,6 +17,8 @@ public class SchedulingService {
   private final BookingService bookings;
   private final Commands commands;
   private final NotificationService notifications;
+  private final ParticipantService participants;
+  private final SettlementService settlement;
 
   public SchedulingService(
       JdbcClient db,
@@ -24,13 +26,17 @@ public class SchedulingService {
       BusinessService business,
       BookingService bookings,
       Commands commands,
-      NotificationService notifications) {
+      NotificationService notifications,
+      ParticipantService participants,
+      SettlementService settlement) {
     this.db = db;
     this.catalog = catalog;
     this.business = business;
     this.bookings = bookings;
     this.commands = commands;
     this.notifications = notifications;
+    this.participants = participants;
+    this.settlement = settlement;
   }
 
   @Transactional
@@ -196,6 +202,9 @@ public class SchedulingService {
 
   private LessonSession insertSession(Actor a, SessionInput r, UUID series) {
     var service = catalog.service(a, r.serviceId());
+    if (service.priceMinor() > 0)
+      throw ApiFailure.conflict(
+          "Paid group checkout is not yet available; publish only free group sessions");
     business.validateStart(a, r.startsAt());
     business.requireServiceAllowed(a, r.providerId(), r.serviceId());
     if (r.roomId() != null && business.room(a, r.roomId()).capacity() < r.capacity())
@@ -257,8 +266,12 @@ public class SchedulingService {
   }
 
   @Transactional
-  public Models.Booking enrol(Actor a, UUID id, String key) {
-    var replay = commands.find(a, "SESSION_ENROL", key, Map.of("sessionId", id));
+  public Models.Booking enrol(Actor a, UUID id, String key, UUID participantId) {
+    Object request =
+        participantId == null
+            ? Map.of("sessionId", id)
+            : new CommerceModels.SessionEnrolment(id, participantId);
+    var replay = commands.find(a, "SESSION_ENROL", key, request);
     if (replay.isPresent()) return bookings.get(a, replay.get().getFirst());
     var s = session(a, id);
     catalog.lockProvider(a, s.providerId());
@@ -268,6 +281,7 @@ public class SchedulingService {
         .query(UUID.class)
         .single();
     s = session(a, id);
+    var student = participants.resolve(a, participantId);
     if (!"OPEN".equals(s.status())) throw ApiFailure.conflict("Session is cancelled");
     business.validateStart(a, s.startsAt());
     if (s.bookedSeats() >= s.capacity()) throw ApiFailure.conflict("Session is full");
@@ -288,9 +302,11 @@ public class SchedulingService {
         s.startsAt(),
         s.endsAt(),
         cancellation,
-        key);
-    notifications.event(a, booking, a.userId(), s.providerId(), "BOOKING_CONFIRMED");
-    commands.save(a, "SESSION_ENROL", key, Map.of("sessionId", id), List.of(booking));
+        key,
+        student);
+    notifications.event(
+        a, booking, participants.payer(student), s.providerId(), "BOOKING_CONFIRMED");
+    commands.save(a, "SESSION_ENROL", key, request, List.of(booking));
     return bookings.get(a, booking);
   }
 
@@ -324,6 +340,7 @@ public class SchedulingService {
           .param("tenant", a.tenantId())
           .param("id", b.id())
           .update();
+      settlement.cancel(a, b);
       notifications.event(a, b.id(), b.customerId(), b.providerId(), "SESSION_CANCELLED");
     }
     db.sql("UPDATE lesson_sessions SET status='CANCELLED' WHERE tenant_id=:tenant AND id=:id")

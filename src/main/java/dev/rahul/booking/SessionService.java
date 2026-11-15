@@ -95,11 +95,14 @@ public class SessionService {
 
   public record Issued(String accessToken, String tokenType, long expiresIn) {}
 
+  @Transactional
   public Issued login(LoginRequest r, String kind) {
     var credentials =
         db.sql(
                 "SELECT u.id,u.password_hash FROM users u JOIN tenants t ON t.id=u.tenant_id WHERE"
-                    + " t.slug=:slug AND u.email=:email")
+                    + " t.slug=:slug AND u.email=:email AND (u.role<>'MANAGED_STUDENT' OR"
+                    + " EXISTS(SELECT 1 FROM participants p WHERE p.tenant_id=u.tenant_id AND"
+                    + " p.user_id=u.id AND p.active AND p.login_enabled)) FOR UPDATE OF u")
             .param("slug", r.tenantSlug())
             .param("email", r.email().trim().toLowerCase(Locale.ROOT))
             .query(
@@ -133,8 +136,9 @@ public class SessionService {
     if (token == null || token.length() != 43) return Optional.empty();
     return db.sql(
             "SELECT u.id,u.tenant_id,u.role,s.id AS session_id FROM auth_sessions s JOIN users u ON"
-                + " u.id=s.user_id WHERE s.token_hash=:hash AND s.kind=:kind AND"
-                + " s.expires_at>now()")
+                + " u.id=s.user_id WHERE s.token_hash=:hash AND s.kind=:kind AND s.expires_at>now()"
+                + " AND (u.role<>'MANAGED_STUDENT' OR EXISTS(SELECT 1 FROM participants p WHERE"
+                + " p.tenant_id=u.tenant_id AND p.user_id=u.id AND p.active AND p.login_enabled))")
         .param("hash", hash(token))
         .param("kind", kind)
         .query(
