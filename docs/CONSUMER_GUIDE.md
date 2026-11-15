@@ -2,7 +2,7 @@
 
 ## Contract and scope
 
-Use `/api/v1`; do not call the legacy `/plm/api/v5` names. The supplied names are a requirements inventory, not a compatible wire contract. OpenAPI and the Postman collection contain actual implemented endpoints. `GET /api/v1/capabilities` reports enabled feature groups to an authenticated consumer. This backend must be run/deployed before an app can consume it.
+Use `/api/v1`; do not call the legacy `/bookora/api/v5` names. The supplied names are a requirements inventory, not a compatible wire contract. OpenAPI and the Postman collection contain actual implemented endpoints. `GET /api/v1/capabilities` reports enabled feature groups to an authenticated consumer. This backend must be run/deployed before an app can consume it.
 
 The current scheduling flows do not charge money. Do not treat CONFIRMED as evidence of payment. There are no payment/wallet/subscription endpoints returning simulated financial success.
 

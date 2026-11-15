@@ -20,7 +20,7 @@ V1 HTTP paths remain `/api/v1`. Existing booking requests may omit roomId. Booki
 
 Cookie login now rotates CSRF; consumers must bootstrap a new token after login (the SDK does this). Stale browser cookies no longer prevent credential/bootstrap requests.
 
-The private appointment overlap constraint is replaced by a shared reservation model so sessions can accept multiple seats safely. Customer overlap enforcement remains in place. No legacy `/plm/api/v5` or `/wc/v2` aliases were registered.
+The private appointment overlap constraint is replaced by a shared reservation model so sessions can accept multiple seats safely. Customer overlap enforcement remains in place. No legacy `/bookora/api/v5` or `/wc/v2` aliases were registered.
 
 ## Not included
 

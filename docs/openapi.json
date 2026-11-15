@@ -1,7 +1,7 @@
 {
   "openapi" : "3.1.0",
   "info" : {
-    "title" : "Booking Platform API",
+    "title" : "Bookora API",
     "description" : "Tenant-scoped booking core. Browser cookie requests require X-XSRF-TOKEN; bearer requests use opaque access tokens.",
     "version" : "0.2.0"
   },

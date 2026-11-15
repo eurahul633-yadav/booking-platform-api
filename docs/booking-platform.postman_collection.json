@@ -1,6 +1,6 @@
 {
   "info": {
-    "name": "Booking Platform API 0.2.0",
+    "name": "Bookora API 0.2.0",
     "description": "Working canonical routes only. Configure IDs from real responses. Bootstrap CSRF before credential POSTs. Use a new idempotency key for each intended command and preserve it for retries. See docs/CONSUMER_GUIDE.md.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },

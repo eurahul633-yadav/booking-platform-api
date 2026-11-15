@@ -3,7 +3,7 @@
   "version": "0.2.0",
   "private": true,
   "type": "module",
-  "description": "Fetch-based client for Booking Platform API",
+  "description": "Fetch-based client for Bookora API",
   "exports": {
     ".": {
       "types": "./index.d.ts",

@@ -12,7 +12,7 @@ public class OpenApiConfig {
     return new OpenAPI()
         .info(
             new Info()
-                .title("Booking Platform API")
+                .title("Bookora API")
                 .version("0.2.0")
                 .description(
                     "Tenant-scoped booking core. Browser cookie requests require X-XSRF-TOKEN;"
