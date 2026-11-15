@@ -1,6 +1,6 @@
-# Bookora API
+# BookingCore API
 
-Bookora is a reusable Java 21 / Spring Boot REST API for building booking applications. Businesses configure providers, services, locations, rooms, availability and scheduled sessions through the API; web and mobile clients consume a versioned HTTP contract.
+BookingCore is a reusable Java 21 / Spring Boot REST API for building booking applications. Businesses configure providers, services, locations, rooms, availability and scheduled sessions through the API; web and mobile clients consume a versioned HTTP contract.
 
 **Release: 0.2.0 development preview.** This is an independent implementation with synthetic examples. The repository remains private. It is not a complete recreation of every supplied legacy feature and has no claimed production capacity or latency target.
 
@@ -20,7 +20,7 @@ Bookora is a reusable Java 21 / Spring Boot REST API for building booking applic
 
 Group sessions support 1–100 seats. The dedicated semi-private partner/invitation/pricing workflow is still planned. GUARDIAN accounts currently have customer permissions; managed dependants and booking on their behalf are not implemented. Payments, wallets, app-store subscriptions, lesson-plan/progress records and external notifications remain planned.
 
-The [coverage map](docs/ENDPOINT_COVERAGE.md) preserves all **273 supplied unique legacy paths** and maps their feature areas to the current interface. Inventory paths use sanitized Bookora names and are not registered aliases. The supplied PHP reference is now being traced separately; full behavioural parity has not yet been established. See the [source review](docs/SOURCE_REVIEW.md).
+The [coverage map](docs/ENDPOINT_COVERAGE.md) preserves all **273 supplied unique legacy paths** and maps their feature areas to the current interface. Inventory paths use sanitized BookingCore names and are not registered aliases. The supplied PHP reference is now being traced separately; full behavioural parity has not yet been established. See the [source review](docs/SOURCE_REVIEW.md).
 
 ## Quick start
 

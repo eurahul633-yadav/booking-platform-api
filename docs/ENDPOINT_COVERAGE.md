@@ -1,4 +1,4 @@
-> Names in this inventory are sanitized Bookora equivalents of supplied reference names; they are requirements labels, not supported HTTP aliases.
+> Names in this inventory are sanitized BookingCore equivalents of supplied reference names; they are requirements labels, not supported HTTP aliases.
 
 # Legacy endpoint inventory and feature coverage
 
@@ -21,9 +21,9 @@ Machine-readable inventory: [endpoint-inventory.json](endpoint-inventory.json). 
 | `/statusiosubscription` | Subscriptions and app-store billing | PLANNED |  |
 | `/handleAppleNotification` | Subscriptions and app-store billing | PLANNED |  |
 | `/fetchLatestVersion` | Application configuration | PARTIAL | `GET /api/v1/business/settings`; `PUT /api/v1/business/settings`; `GET /api/v1/capabilities` |
-| `/bookora_login` | Authentication | AVAILABLE | `POST /api/v1/auth/token`; `POST /api/v1/auth/login`; `POST /api/v1/auth/logout` |
-| `/bookora_createaccount` | Account registration | PARTIAL | `POST /api/v1/auth/workspaces`; `POST /api/v1/auth/register`; `POST /api/v1/invitations`; `POST /api/v1/auth/invitations/accept` |
-| `/bookora_createaccount_parent` | Account registration | PARTIAL | `POST /api/v1/auth/workspaces`; `POST /api/v1/auth/register`; `POST /api/v1/invitations`; `POST /api/v1/auth/invitations/accept` |
+| `/bookingcore_login` | Authentication | AVAILABLE | `POST /api/v1/auth/token`; `POST /api/v1/auth/login`; `POST /api/v1/auth/logout` |
+| `/bookingcore_createaccount` | Account registration | PARTIAL | `POST /api/v1/auth/workspaces`; `POST /api/v1/auth/register`; `POST /api/v1/invitations`; `POST /api/v1/auth/invitations/accept` |
+| `/bookingcore_createaccount_parent` | Account registration | PARTIAL | `POST /api/v1/auth/workspaces`; `POST /api/v1/auth/register`; `POST /api/v1/invitations`; `POST /api/v1/auth/invitations/accept` |
 | `/forgotpassword` | Password recovery | PLANNED |  |
 | `/resetpassword` | Password recovery | PLANNED |  |
 | `/getinvitation` | Invitations and relationships | PARTIAL | `POST /api/v1/invitations`; `GET /api/v1/invitations`; `POST /api/v1/invitations/{id}/revoke`; `POST /api/v1/auth/invitations/accept` |
@@ -269,7 +269,7 @@ Machine-readable inventory: [endpoint-inventory.json](endpoint-inventory.json). 
 | `/checkIosSubscriptionStatus` | Subscriptions and app-store billing | PLANNED |  |
 | `/createPaymentIntent` | Payments, orders and payouts | PLANNED |  |
 | `/checkstripesubscriptionstatus` | Subscriptions and app-store billing | PLANNED |  |
-| `/Bookora-login` | Authentication | AVAILABLE | `POST /api/v1/auth/token`; `POST /api/v1/auth/login`; `POST /api/v1/auth/logout` |
+| `/BookingCore-login` | Authentication | AVAILABLE | `POST /api/v1/auth/token`; `POST /api/v1/auth/login`; `POST /api/v1/auth/logout` |
 | `/getlocationscreditbyuserid` | Wallets and credits | PLANNED |  |
 | `/getlocationscreditbylocid` | Wallets and credits | PLANNED |  |
 | `/getallfiltercategory` | Categories, tags and custom fields | PLANNED |  |

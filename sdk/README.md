@@ -1,6 +1,6 @@
 # Booking client
 
-Dependency-free JavaScript client with TypeScript declarations for the implemented Bookora API. Supports modern browsers and Node.js 22+. This package is private and has not been published to npm.
+Dependency-free JavaScript client with TypeScript declarations for the implemented BookingCore API. Supports modern browsers and Node.js 22+. This package is private and has not been published to npm.
 
 Install from a local checkout using `npm install /path/to/booking-platform-api/sdk`, or import `./sdk/index.mjs` in a Node application. Browser applications should use their normal bundler.
 
