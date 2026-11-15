@@ -44,7 +44,7 @@
       "note": "Booking policies and capabilities work; application versioning, arbitrary fields and onboarding screens remain planned."
     },
     {
-      "legacyPath": "/bookora_login",
+      "legacyPath": "/bookingcore_login",
       "domain": "Authentication",
       "status": "AVAILABLE",
       "canonicalInterfaces": [
@@ -55,7 +55,7 @@
       "note": "Canonical authentication uses credential POSTs; legacy GET login routes are not registered."
     },
     {
-      "legacyPath": "/bookora_createaccount",
+      "legacyPath": "/bookingcore_createaccount",
       "domain": "Account registration",
       "status": "PARTIAL",
       "canonicalInterfaces": [
@@ -67,7 +67,7 @@
       "note": "Workspace owners, customers and invited provider/guardian accounts work; specialised legacy onboarding is not reproduced."
     },
     {
-      "legacyPath": "/bookora_createaccount_parent",
+      "legacyPath": "/bookingcore_createaccount_parent",
       "domain": "Account registration",
       "status": "PARTIAL",
       "canonicalInterfaces": [
@@ -2332,7 +2332,7 @@
       "note": "Receipt verification, lifecycle reconciliation and entitlement contracts are not implemented."
     },
     {
-      "legacyPath": "/Bookora-login",
+      "legacyPath": "/BookingCore-login",
       "domain": "Authentication",
       "status": "AVAILABLE",
       "canonicalInterfaces": [

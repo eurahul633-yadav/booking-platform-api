@@ -1,4 +1,4 @@
-# Bookora source review
+# BookingCore source review
 
 The supplied PHP archive contains 10 source files, 46,992 lines and 446 function declarations. It is used as a business-rule reference for an independent Java implementation. PHP code, uploaded archives and credentials are not committed to this repository.
 
@@ -23,9 +23,9 @@ These trace points establish observed behavior, not a claim of complete compatib
 
 ## Sanitization
 
-The reference copy uses Bookora branding, nonfunctional credential placeholders and reserved example domains. Personal email addresses, internal links and macOS resource-fork metadata were removed or replaced. Automated credential detection is a review aid and does not prove that every possible secret format has been found.
+The reference copy uses BookingCore branding, nonfunctional credential placeholders and reserved example domains. Personal email addresses, internal links and macOS resource-fork metadata were removed or replaced. Automated credential detection is a review aid and does not prove that every possible secret format has been found.
 
-The reference ZIP is documentation material, not a deployable or executable component of Bookora. Production credentials must be supplied through environment configuration or a secret manager.
+The reference ZIP is documentation material, not a deployable or executable component of BookingCore. Production credentials must be supplied through environment configuration or a secret manager.
 
 ## Implementation status
 
